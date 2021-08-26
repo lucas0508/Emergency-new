@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:clipChildren="false"
+    tools:ignore="MissingDefaultResource">
+
+    <com.tjmedicine.emergency.model.widget.CustomScrollViewPager
+        android:id="@+id/vp_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_weight="1" />
+
+    <RadioGroup
+        android:id="@+id/nav"
+        android:layout_width="match_parent"
+        android:layout_height="61dp"
+        android:layout_alignParentBottom="true"
+        android:background="#fff"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_tab_menu_homepage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#fff"
+            android:button="@null"
+            android:checked="true"
+            android:drawableTop="@drawable/main_tab_menu_home"
+            android:gravity="center"
+            android:paddingTop="6dp"
+            android:text="@string/rb_tab_menu_homepage"
+            android:textColor="@drawable/colors"
+            android:textSize="12sp" />
+
+
+        <RadioButton
+            android:id="@+id/rb_tab_menu_material"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#fff"
+            android:button="@null"
+            android:checked="false"
+            android:drawableTop="@drawable/main_tab_menu_material"
+            android:gravity="center"
+            android:paddingTop="6dp"
+            android:text="@string/rb_tab_menu_material"
+            android:textColor="@drawable/colors"
+            android:textSize="12sp" />
+
+
+        <RadioButton
+            android:id="@+id/rb_tab_menu_mypage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#fff"
+            android:button="@null"
+            android:checked="false"
+            android:drawableTop="@drawable/main_tab_menu_my"
+            android:gravity="center"
+            android:paddingTop="6dp"
+            android:text="@string/rb_tab_menu_mypage"
+            android:textColor="@drawable/colors"
+            android:textSize="12sp" />
+
+    </RadioGroup>
+
+</LinearLayout>
+

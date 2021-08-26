@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    android:elevation="4dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.tjmedicine.emergency.model.widget.BGAProgressBar
+                    android:id="@+id/bga_pd_progress"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:padding="5dp"
+                    app:bga_pb_isCapRounded="false"
+                    app:bga_pb_isHiddenText="false"
+                    app:bga_pb_mode="circle"
+                    app:bga_pb_radius="24dp"
+                    app:bga_pb_reachedColor="#F7B829"
+                    app:bga_pb_reachedHeight="4dp"
+                    app:bga_pb_textColor="#FFC73B"
+                    app:bga_pb_textMargin="8dp"
+                    app:bga_pb_textSize="14sp"
+                    app:bga_pb_unReachedColor="#F5F5F5"
+                    app:bga_pb_unReachedHeight="2dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="按压强度(Pa)"
+                    android:textColor="#ffc0c5cc"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.tjmedicine.emergency.model.widget.BGAProgressBar
+                    android:id="@+id/bga_pdcount_progress"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:padding="5dp"
+                    app:bga_pb_isCapRounded="false"
+                    app:bga_pb_isHiddenText="false"
+                    app:bga_pb_mode="circle"
+                    app:bga_pb_radius="24dp"
+                    app:bga_pb_reachedColor="#7CBC4B"
+                    app:bga_pb_reachedHeight="4dp"
+                    app:bga_pb_textColor="#FFC73B"
+                    app:bga_pb_textMargin="8dp"
+                    app:bga_pb_textSize="14sp"
+                    app:bga_pb_unReachedColor="#F5F5F5"
+                    app:bga_pb_unReachedHeight="2dp"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="按压次数(次)"
+                    android:textColor="#ffc0c5cc"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.tjmedicine.emergency.model.widget.BGAProgressBar
+                    android:id="@+id/bga_blow_progress"
+                    android:layout_width="64dp"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_height="64dp"
+                    app:bga_pb_isCapRounded="false"
+                    app:bga_pb_isHiddenText="false"
+                    app:bga_pb_mode="circle"
+                    app:bga_pb_radius="24dp"
+                    app:bga_pb_reachedColor="#6AABDE"
+                    app:bga_pb_reachedHeight="6dp"
+                    app:bga_pb_textColor="#FFC73B"
+                    app:bga_pb_textSize="14sp"
+                    app:bga_pb_unReachedColor="#F5F5F5"
+                    app:bga_pb_unReachedHeight="3dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="人工呼吸(次)"
+                    android:textColor="#ffc0c5cc"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="15dp"
+            android:background="#EEEEEE" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="2020-12-14 11:32"
+                android:textColor="#ffc0c5cc"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="21"
+                android:textColor="#ffe4361f"
+                android:textSize="24sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

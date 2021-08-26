@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/base_title_layout" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:contentDescription="TODO"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:text="\u3000\u3000三止健康科技（北京）有限责任公司，成立于2014年，专注于城市院前急救体系建设，主要业务为非紧急医疗转运、公众院前急救平台建设与管理、院前急救员培训、AED推广等。
+非紧急医疗转运是现有紧急医疗的有益的补充，主要是设立呼叫中心，对接联网城市120呼叫中心，为非紧急情况患者提供同城或异地转运服务，同时也配备必要的监测、检查、治疗等急救服务。目前现有的急救呼叫系统有一半的属于非紧急情况，但也占用了大量的急救车资源，给真正的急救呼叫带来压力。三止健康的非紧急医疗转运能有效缓解紧急医疗的压力，健全城市急救体系建设，让急救服务更加精准化、智慧化。
+院前急救员培训。主要针对非紧急医疗转运配备的急救员、辅助人员等，开展分等级的专业的急救知识和技术培训，具有成熟的培训教材和体系，能提供大量高质量的急救服务人员。
+公众院前急救平台建设与管理。主要是以手机APP、微信小程序为载体，建立平台，一是汇聚城市中掌握心肺复苏技术的志愿者上线，为有需求的患者提供就近呼叫心肺复苏急救服务。二是集成城市AED急救箱配置信息，为施救者定位、提供最近的AED信息，包括提取AED、归还AED等。三是开展线上和线下的公众急救知识普及培训，包括心肺复苏在内的各种内、外科急症的急救常识培训以及配合AED推广的AED使用培训。
+AED推广。主要负责在各个城市中推广AED配置，提高城市AED配置率，加强城市急救体系建设。预估全国AED市场销售额3000万元左右。
+三止健康公司自成立以来，依托中国心胸血管麻醉学会以及下属的29个专业分会雄厚的医师力量，以院前急救为切入点，配合各级政府启动并推进健康城市建设，在公众中开展急救知识和技术普及。全国共可使用急救、心血管、麻醉医师资源5000名。公众院前急救平台建设与管理业务主要依托中国心胸血管麻醉学会下属的心肺复苏委员会设在全国的140多个省级、地市级、县级办事处，各办事处主任由当地的卫建委领导（医院院长、科室主任）担任，主要负责组织当地的医师，在公众中开展心肺复苏普及培训。自2015年至今，已累计培训50万人，成为掌握心肺复苏技术的城市急救志愿者。同时建立有系统的完善的培训管理制度，包括办事处管理、培训规范、培训教材、考核制度、证书管理、讲师管理、品牌管理等。目前该业务以“心手相连 点亮生命”心肺复苏普及培训公益活动命名，已经成为国内从事心肺复苏普及的一个重要力量和有影响力的品牌，并与公安部、国家能源集团等中央国家机关、大型国企合作，为其全国整个系统的工作人员开展培训。
+非紧急医疗转运、院前急救员培训主要依托中国心胸血管麻醉学会及其下属的急救与服务分会、重症分会的专业医师，提供专业的指导和培训，具有成熟的培训体系和经验丰富的培训导师力量。
+通过上述业务开展，充实和完善城市急救体系建设，建立急救大数据平台，打造城市智慧急救系统。
+三止健康公司依托的中国心胸血管麻醉学会是在民政部注册的国家一级学术团体，由中国医学科院阜外医院、复旦大学附属肿瘤医院、广东省人民医院等6家医院以及胡盛寿院士、高润霖院士等6位院士联名发起，下设心血管、急救有关的29个分会，共有5000多名医师会员，同时与国际心胸血管麻醉学会、美国华人医师协会保持友好合作关系，代表着这一领域国内最高学术水平。"
+        android:textColor="#343434"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:textColor="#343434"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.061" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

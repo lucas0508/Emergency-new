@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Common -->
+    <color name="lightGray">#FFF5F5F5</color>
+
+    <color name="dark_orange">#E77239</color>
+    <color name="light_orange">#EFB5A0</color>
+    <color name="actionBarColor">@color/nordicBlue</color>
+    <color name="actionBarColorDark">@color/nordicBlueDark</color>
+    <color name="nordicBlue">#FF00A9CE</color>
+    <color name="nordicBlueDark">#FF0090B0</color>
+    <color name="nordicSky">#FF6AD1E3</color>
+    <color name="nordicBlueslate">#FF0033A0</color>
+    <color name="nordicLake">#FF0077C8</color>
+    <color name="nordicLightGray">#FFD9E1E2</color>
+    <color name="nordicMediumGray">#FF768692</color>
+    <color name="nordicDarkGray">#FF333F48</color>
+    <color name="nordicGrass">#FFD0DF00</color>
+    <color name="nordicSun">#FFFFCD00</color>
+    <color name="nordicRed">#FFEE2F4E</color>
+    <color name="nordicFall">#E4361F</color>
+    <!-- 蓝色 -->
+    <color name="blue">#0498f5</color>
+    <!-- 绿色 -->
+    <color name="green">#0dab61</color>
+
+    <!-- 米色 -->
+    <color name="beige">#C0C5CC</color>
+
+    <!-- 灰色 -->
+    <color name="dark">#E4E2E2</color>
+
+    <!-- 浊色 -->
+    <color name="grey_light">#f3f3f3</color>
+
+    <!-- 红色 -->
+    <color name="red">#ff0000</color>
+    <!-- 深红色 -->
+    <color name="red_dark">#BE0E20</color>
+    <!-- 深蓝色 -->
+    <color name="blue_dark">#0C4A9A</color>
+
+
+    <color name="grey">#FF999999</color>
+    <!--透明-->
+    <color name="transparent">#00000000</color>
+    <!--橙色-->
+    <color name="orange">#EA5513</color>
+
+    <!--下划线-->
+    <color name="line_blue">#0591F1</color>
+
+    <!--气泡-->
+    <color name="map_orange">#FFBB4C</color>
+    <color name="map_blue">#FF0591F1</color>
+
+
+    <color name="colorbtmHs">#30000000</color>
+    <color name="rsbColorSeekBarDefault">#ff0000</color>
+    <color name="rsbColorThumbPressed">#FFEEEEEE</color>
+    <color name="rsbColorThumbDefault">#FFFFFF</color>
+    <color name="rsbColorThumbBorder">#FFD7D7D7</color>
+
+    <!--wheel 的颜色值-->
+    <color name="whell_item_bg_select">#efefef</color>
+
+    <color name="view1_bg">#d2d2d2</color>
+
+    <color name="bg_loading">#f0f0f3</color>
+
+    <color name="dialogButtonPressed">#115f5f5f</color>
+    <color name="dialogTitle">#5F5F5F</color>
+
+    <color name="cp_color_gray_light">#cdcdcd</color>
+    <color name="cp_color_gray">#999999</color>
+    <color name="cp_color_gray_deep">#666666</color>
+    <color name="cp_color_gray_dark">#333333</color>
+    <color name="cp_color_section_bg">#EDEDED</color>
+    <color name="cp_color_grid_item_bg">#f5f5f5</color>
+</resources>

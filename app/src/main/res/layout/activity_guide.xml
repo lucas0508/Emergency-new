@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <cn.bingoogolapple.bgabanner.BGAGuideLinkageLayout  android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <cn.bingoogolapple.bgabanner.BGABanner
+            android:id="@+id/banner_guide_foreground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:banner_pointContainerBackground="@android:color/transparent"
+            app:banner_pointAutoPlayAble="false"
+            app:banner_pointDrawable="@android:color/transparent"
+            app:banner_transitionEffect="alpha"/>
+    </cn.bingoogolapple.bgabanner.BGAGuideLinkageLayout>
+
+    <TextView
+        android:paddingEnd="6dp"
+        android:id="@+id/tv_guide_skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:padding="4dp"
+        android:text="跳过 >"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="16sp"/>
+
+    <ImageView
+        android:id="@+id/btn_guide_enter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:src="@mipmap/btn"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+</RelativeLayout>

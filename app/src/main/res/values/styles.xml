@@ -1,0 +1,84 @@
+<resources>
+
+
+    <style name="access_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item> <!--Dialog的windowFrame框为无 -->
+        <item name="android:windowIsFloating">false</item><!-- 是否漂现在activity上 -->
+        <item name="android:windowIsTranslucent">false</item><!-- 是否半透明 -->
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="SelectPicDialog" parent="@android:style/Theme.Holo.Dialog">
+        <!-- 是否有边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!--是否在悬浮Activity之上  -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!--阴影  -->
+        <item name="android:windowIsTranslucent">true</item><!--半透明-->
+        <!--背景透明-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 还可以加入一些弹出和退出的动画 (lan)-->
+    </style>
+
+
+    <style name="fullscreen_dialog" parent="@style/Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@color/white</item>
+        <!--隐藏状态栏内容和高度，适用于SDK19（4.4）及以上版本-->
+        <item name="android:windowFullscreen">true</item>
+
+        <item name="android:windowTranslucentStatus" >true</item>
+
+    </style>
+
+    <!--ActivityDialog底部弹出样式 start-->
+    <style name="ActivityDialogTheme" parent="@style/Theme.AppCompat.Dialog">
+        <!--设置dialog的背景-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--设置无标题-->
+        <item name="android:windowNoTitle">true</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--背景是否模糊显示-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!--没有ActionBar -->
+        <item name="windowActionBar">false</item>
+        <!--设置全屏 -->
+        <item name="android:windowFullscreen">true</item>
+        <!--去掉头部标题栏 -->
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
+   <!--消除边距和黑边框-->
+    <style name="ActionSheetDialogStyle" parent="@android:style/Theme.Holo.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+
+    <style name="MyLoginCheckBox" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/dark</item>
+        <item name="colorControlActivated">@color/blue</item>
+    </style>
+
+
+    <style name="BottomDialog.Animation" parent="Animation.AppCompat.Dialog">
+        <item name="android:windowEnterAnimation">@anim/translate_dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/translate_dialog_out</item>
+    </style>
+
+
+    <style name="custom_alert_dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog
+        </item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+    </style>
+</resources>

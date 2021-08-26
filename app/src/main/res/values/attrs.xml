@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="RoundImageView">
+        <attr name="type" format="enum">
+            <enum name="circle" value="1" />
+            <enum name="round" value="2" />
+        </attr>
+        <attr name="radius" format="dimension" />
+    </declare-styleable>
+
+
+    <declare-styleable name="PasswordEditText">
+        <!-- 密码的个数 -->
+        <attr name="passwordNumber" format="integer" />
+        <!-- 密码圆点的半径 -->
+        <attr name="passwordRadius" format="dimension" />
+        <!-- 密码圆点的颜色 -->
+        <attr name="passwordColor" format="color" />
+        <!-- 分割线的颜色 -->
+        <attr name="divisionLineColor" format="color" />
+        <!-- 分割线的大小 -->
+        <attr name="divisionLineSize" format="color" />
+        <!-- 背景边框的颜色 -->
+        <attr name="bgColor" format="color" />
+        <!-- 背景边框的大小 -->
+        <attr name="bgSize" format="dimension" />
+        <!-- 背景边框的圆角大小 -->
+        <attr name="bgCorner" format="dimension" />
+    </declare-styleable>
+
+
+    <!-- CircleIndicator -->
+    <declare-styleable name="CircleIndicator">
+        <attr name="ci_width" format="dimension" />
+        <attr name="ci_height" format="dimension" />
+        <attr name="ci_margin" format="dimension" />
+        <attr name="ci_animator" format="reference" />
+        <attr name="ci_animator_reverse" format="reference" />
+        <attr name="ci_drawable" format="reference" />
+        <attr name="ci_drawable_unselected" format="reference" />
+    </declare-styleable>
+
+    <!-- CircleProgressView -->
+    <declare-styleable name="CircleProgressView">
+        <attr name="matProg_progressIndeterminate" format="boolean" />
+        <attr name="matProg_barColor" format="color" />
+        <attr name="matProg_rimColor" format="color" />
+        <attr name="matProg_rimWidth" format="dimension" />
+        <attr name="matProg_spinSpeed" format="float" />
+        <attr name="matProg_barSpinCycleTime" format="integer" />
+        <attr name="matProg_circleRadius" format="dimension" />
+        <attr name="matProg_fillRadius" format="boolean" />
+        <attr name="matProg_barWidth" format="dimension" />
+        <attr name="matProg_linearProgress" format="boolean" />
+    </declare-styleable>
+
+
+    <!-- CircleImageView -->
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+        <attr name="border_overlay" format="boolean" />
+    </declare-styleable>
+
+
+    <declare-styleable name="RangeSeekBar">
+        <!--RangeSeekBar common attrs-->
+
+        <!--The maximum-->
+        <attr name="rsb_max" format="float" />
+
+        <!--The minimum-->
+        <attr name="rsb_min" format="float" />
+
+        <!--RangeSeekBar mode, single is normal seekBar, range is RangeSeekBar-->
+        <attr name="rsb_mode" format="enum">
+            <enum name="single" value="1" />
+            <enum name="range" value="2" />
+        </attr>
+
+        <!--The min interval of the thumbs -->
+        <attr name="rsb_range_interval" format="float" />
+
+        <!-- 0 for the normal mode, greater than 1 to switch to scale mode-->
+        <attr name="rsb_tick_mark_number" format="integer" />
+
+        <!--Scale mode
+        Number according to the scale of the actual proportion of the distribution of the location (markTextArray must be a number)
+        Other bisects the current layout (markTextArray can be any character)
+        -->
+        <attr name="rsb_tick_mark_mode" format="enum">
+            <enum name="number" value="0" />
+            <enum name="other" value="1" />
+        </attr>
+
+        <!--The tick mark text gravity -->
+        <attr name="rsb_tick_mark_gravity" format="enum">
+            <enum name="left" value="0" />
+            <enum name="center" value="1" />
+            <enum name="right" value="2" />
+        </attr>
+
+        <!--The tick mark text array -->
+        <attr name="rsb_tick_mark_text_array" format="reference" />
+
+        <!--The tick mark text margin bottom to progress -->
+        <attr name="rsb_tick_mark_text_margin" format="dimension" />
+
+        <attr name="rsb_tick_mark_text_size" format="dimension" />
+
+        <attr name="rsb_tick_mark_text_color" format="color" />
+
+        <!--it just work in range && number mode now-->
+        <attr name="rsb_tick_mark_in_range_text_color" format="color" />
+
+        <attr name="rsb_progress_height" format="dimension" />
+
+        <attr name="rsb_progress_radius" format="dimension" />
+
+        <!--the color of progress bar when in progress-->
+        <attr name="rsb_progress_color" format="color" />
+
+        <!--the default color of the progress bar-->
+        <attr name="rsb_progress_default_color" format="color" />
+
+        <!--the vertical RangeSeekBar draw orientation-->
+        <attr name="rsb_orientation" format="enum">
+            <enum name="left" value="-1" />
+            <enum name="right" value="1" />
+        </attr>
+
+        <!--SeekBar attrs-->
+        <attr name="rsb_indicator_show_mode" format="enum">
+            <enum name="showWhenTouch" value="0" />
+            <enum name="alwaysHide" value="1" />
+            <enum name="alwaysShowAfterTouch" value="2" />
+            <enum name="alwaysShow" value="3" />
+        </attr>
+        <attr name="rsb_indicator_height" format="dimension" />
+        <attr name="rsb_indicator_width" format="dimension" />
+        <!--indicator margin bottom to progress bar-->
+        <attr name="rsb_indicator_margin" format="dimension" />
+        <attr name="rsb_indicator_text_size" format="dimension" />
+        <attr name="rsb_indicator_text_color" format="color" />
+        <!--indicator arrow size, it just work when you not use rsb_indicator_drawable -->
+        <attr name="rsb_indicator_arrow_size" format="dimension" />
+        <!-- must use 9 path ！！！-->
+        <attr name="rsb_indicator_drawable" format="reference" />
+        <attr name="rsb_indicator_background_color" format="color" />
+        <attr name="rsb_indicator_padding_left" format="dimension" />
+        <attr name="rsb_indicator_padding_right" format="dimension" />
+        <attr name="rsb_indicator_padding_top" format="dimension" />
+        <attr name="rsb_indicator_padding_bottom" format="dimension" />
+        <attr name="rsb_indicator_radius" format="dimension" />
+        <attr name="rsb_thumb_drawable" format="reference" />
+        <!--the thumb inactivated is when you don't touch the thumb button-->
+        <attr name="rsb_thumb_inactivated_drawable" format="reference" />
+        <attr name="rsb_thumb_size" format="dimension" />
+        <attr name="rsb_thumb_scale_ratio" format="float" />
+    </declare-styleable>
+
+
+    <declare-styleable name="NiceImageView">
+        <attr name="is_circle" format="boolean" />
+        <attr name="is_cover_src" format="boolean" />
+        <attr name="corner_radius" format="dimension" />
+        <attr name="corner_top_left_radius" format="dimension" />
+        <attr name="corner_top_right_radius" format="dimension" />
+        <attr name="corner_bottom_left_radius" format="dimension" />
+        <attr name="corner_bottom_right_radius" format="dimension" />
+        <attr name="nice_border_width" format="dimension" />
+        <attr name="nice_border_color" format="color" />
+        <attr name="inner_border_width" format="dimension" />
+        <attr name="inner_border_color" format="color" />
+        <attr name="mask_color" format="color" />
+    </declare-styleable>
+
+
+    <declare-styleable name="Captcha">
+        <attr name="src" format="reference" />
+        <attr name="progressDrawable" format="reference" />
+        <attr name="thumbDrawable" format="reference" />
+        <attr name="mode" format="enum">
+            <enum name="mode_bar" value="1" />
+            <enum name="mode_nonbar" value="2" />
+        </attr>
+        <attr name="max_fail_count" format="integer" />
+        <attr name="blockSize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="SwipeCaptchaView">
+        <attr name="captchaWidth" format="dimension" />
+        <attr name="captchaHeight" format="dimension" />
+        <attr name="matchDeviation" format="dimension" />
+    </declare-styleable>
+    <!-- 设置圆角 -->
+    <declare-styleable name="roundConner">
+        <attr name="round" format="dimension" />
+    </declare-styleable>
+    <attr name="cpCancelTextSize" format="dimension|reference" />
+    <attr name="cpCancelTextColor" format="color|reference" />
+
+    <attr name="cpClearTextIcon" format="reference" />
+    <attr name="cpSearchTextSize" format="dimension|reference" />
+    <attr name="cpSearchTextColor" format="color|reference" />
+    <attr name="cpSearchHintText" format="string|reference" />
+    <attr name="cpSearchHintTextColor" format="color|reference" />
+    <attr name="cpSearchCursorDrawable" format="reference" />
+
+    <attr name="cpListItemTextSize" format="dimension|reference" />
+    <attr name="cpListItemTextColor" format="color|reference" />
+    <attr name="cpListItemHeight" format="dimension|reference" />
+
+    <attr name="cpEmptyIcon" format="reference" />
+    <attr name="cpEmptyIconWidth" format="dimension|reference" />
+    <attr name="cpEmptyIconHeight" format="dimension|reference" />
+    <attr name="cpEmptyText" format="string|reference" />
+    <attr name="cpEmptyTextSize" format="dimension|reference" />
+    <attr name="cpEmptyTextColor" format="color|reference" />
+
+    <attr name="cpGridItemBackground" format="color|reference" />
+    <attr name="cpGridItemSpace" format="reference" />
+
+    <attr name="cpSectionHeight" format="reference" />
+    <attr name="cpSectionTextSize" format="reference" />
+    <attr name="cpSectionTextColor" format="reference" />
+    <attr name="cpSectionBackground" format="reference" />
+
+    <attr name="cpIndexBarTextSize" format="reference" />
+    <attr name="cpIndexBarNormalTextColor" format="reference" />
+    <attr name="cpIndexBarSelectedTextColor" format="reference" />
+
+    <attr name="cpOverlayWidth" format="dimension|reference" />
+    <attr name="cpOverlayHeight" format="dimension|reference" />
+    <attr name="cpOverlayTextSize" format="dimension|reference" />
+    <attr name="cpOverlayTextColor" format="color|reference" />
+    <attr name="cpOverlayBackground" format="color|reference" />
+
+    <!-- Restricts to ONLY indeterminate mode (state-keeping progress mode will not work). -->
+    <attr name="indeterminateOnly" format="boolean" />
+    <!-- Drawable used for the indeterminate mode. -->
+    <attr name="indeterminateDrawable" format="reference" />
+    <!-- Defines if the associated drawables need to be mirrored when in RTL mode.
+      Default is false. -->
+    <attr name="mirrorForRtl" format="boolean" />
+
+    <attr name="indeterminateDuration" format="integer" min="1" />
+    <!-- Defines how the indeterminate mode should behave when the progress
+    reaches max. -->
+    <attr name="indeterminateBehavior">
+        <!-- Progress starts over from 0. -->
+        <enum name="repeat" value="1" />
+        <!-- Progress keeps the current value and goes back to 0. -->
+        <enum name="cycle" value="2" />
+    </attr>
+
+    <declare-styleable name="BGAProgressBar">
+        <!-- 进度条样式，默认值为 system -->
+        <attr name="bga_pb_mode" format="enum">
+            <!-- 系统自带样式 -->
+            <enum name="system" value="0" />
+            <!-- 水平进度条 -->
+            <enum name="horizontal" value="1" />
+            <!-- 圆形进度条 -->
+            <enum name="circle" value="2" />
+            <!-- 彗星进度条 -->
+            <enum name="comet" value="3" />
+            <!-- 水波纹进度条 -->
+            <enum name="wave" value="4" />
+        </attr>
+        <!-- 文字颜色，默认值为 #70A800 -->
+        <attr name="bga_pb_textColor" format="reference|color" />
+        <!-- 文字大小，默认值为 10sp -->
+        <attr name="bga_pb_textSize" format="dimension" />
+        <!-- 文字和进度条之间的间距，默认值为 4dp -->
+        <attr name="bga_pb_textMargin" format="dimension" />
+        <!-- 已完成进度的颜色，默认值为 #70A800 -->
+        <attr name="bga_pb_reachedColor" format="reference|color" />
+        <!-- 已完成进度的高度，默认值为 2dp -->
+        <attr name="bga_pb_reachedHeight" format="dimension" />
+        <!-- 未完成进度的颜色，默认值为 #CCCCCC -->
+        <attr name="bga_pb_unReachedColor" format="reference|color" />
+        <!-- 未完成进度的高度，默认值为 1dp -->
+        <attr name="bga_pb_unReachedHeight" format="dimension" />
+        <!-- 是否为圆角，默认值为 false -->
+        <attr name="bga_pb_isCapRounded" format="boolean" />
+        <!-- 是否隐藏文字，默认值为 false -->
+        <attr name="bga_pb_isHiddenText" format="boolean" />
+        <!-- 圆形进度条半径，默认值为 16dp -->
+        <attr name="bga_pb_radius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="KeepCountdownView">
+        <attr name="arcColor" format="color" />
+        <attr name="numColor" format="color" />
+        <attr name="arcStrokeWidth" format="dimension" />
+        <attr name="numTextSize" format="dimension" />
+        <attr name="initDegree" format="integer" />
+        <attr name="maxNum" format="integer" />
+        <attr name="isCW" format="boolean" />
+        <attr name="keep_radius" format="dimension" />
+        <attr name="plusNumAnimDuration" format="float" />
+
+    </declare-styleable>
+    <declare-styleable name="BatteryView">
+        <attr name="battery_view_height" format="integer" />
+        <attr name="battery_view_width" format="integer" />
+        <attr name="battery_view_inside_margin" format="integer" />
+
+    </declare-styleable>
+
+    <declare-styleable name="lib_ui_view_CTickView">
+        <attr name="lib_ui_view_ctv_color" format="color" />
+        <attr name="lib_ui_view_ctv_colorCircle" format="color" />
+        <attr name="lib_ui_view_ctv_strokeWidth" format="dimension" />
+    </declare-styleable>
+
+
+</resources>

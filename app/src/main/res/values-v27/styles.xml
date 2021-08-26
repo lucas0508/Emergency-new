@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="fullscreen_dialog" parent="@style/Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@color/white</item>
+        <!--隐藏状态栏内容和高度，适用于SDK19（4.4）及以上版本-->
+        <item name="android:windowFullscreen">true</item>
+        <!-- 对于28及以上的版本，需要指定该属性，否则对于异形屏的手机，无法让布局铺满异性区域 -->
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <item name="android:windowTranslucentStatus">true</item>
+
+    </style>
+</resources>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.tjmedicine.emergency">
+
+
+    <!--获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <!-- 请求网络 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!--用于提高GPS定位速度-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <!--读取缓存数据-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--用于读取手机当前的状态-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <!--用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
+    <!--这个权限用于允许程序在手机屏幕关闭后后台进程仍然运行-->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+<!--    读取关于联系人权限-->
+<!--    <uses-permission android:name="android.permission.READ_CONTACTS" />-->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!--写入扩展存储，向扩展卡写入数据，用于写入缓存定位数据-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="no.nordicsemi.android.LOG" />
+    <!-- 用户手机设置中允许未知来源安装包安装状态为关；-->
+    <!-- Android8.0 以后，如果要安装 apk 需要额外添加权限：-->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- 必选-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 允许程序录制音频 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <!-- 可选-->
+    <uses-permission android:name="android.permission.READ_LOGS" /> <!-- 获取logcat日志 -->
+
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
+
+    <application
+        android:name=".EmergencyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Emergency"
+        android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true"
+        tools:replace="android:icon,android:theme">
+
+        <!--//    设计图纸 大小 -->
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="375" />
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="667" />
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="eaf16e8089a5cbe2296d0070f80b1d72" />
+
+
+        <meta-data
+            android:name="com.mob.mobpush.debugLevel"
+            android:value="4" />
+
+        <meta-data
+            android:name="PGYER_API_KEY"
+            android:value="d77b2c007f66d27e67c0aa87629db9e4" />
+        <meta-data
+            android:name="PGYER_FRONTJS_KEY"
+            android:value="166245569011c4b7ef03694280d060da"/>
+
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/App.Theme.Launch">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.splash.GuideActivity" />
+
+
+        <activity android:name=".ui.main.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="com.mob.mobpush.linkhome"
+                    android:scheme="mlink" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.uart.UARTRobotActivity"
+            android:keepScreenOn="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.uart.UARTActivity"
+            android:icon="@drawable/ic_uart_feature"
+            android:label="@string/uart_feature_title"
+            android:windowSoftInputMode="adjustResize">
+            <!--            android:launchMode="singleTask" -->
+
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
+
+            <!--                <category android:name="no.nordicsemi.android.nrftoolbox.LAUNCHER" />-->
+            <!--            </intent-filter>-->
+        </activity>
+
+
+        <service android:name="com.amap.api.location.APSService" />
+        <!-- 注册Service服务 -->
+        <service android:name=".common.server.LocationService">
+            <intent-filter>
+                <action android:name="common.server.LOCATION_SERVICE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".ui.uart.UARTService"
+            android:label="@string/uart_feature_title" />
+
+        <provider
+            android:name=".ui.uart.UARTLocalLogContentProvider"
+            android:authorities="com.tjmedicine.emergency.ui.uart.log"
+            android:exported="true" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.tjmedicine.emergency"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths_public" />
+        </provider>
+
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
+
+        <activity android:name="com.tjmedicine.emergency.ui.mine.apply.view.MineApplyActivity" />
+        <activity android:name="com.tjmedicine.emergency.ui.mine.auth.view.MineAuthActivity" />
+        <activity android:name="com.tjmedicine.emergency.ui.mine.volunteer.view.ApplyVolunteerActivity" />
+        <activity android:name="com.tjmedicine.emergency.ui.mine.contact.view.EmergencyContactActivity" />
+        <activity android:name="com.tjmedicine.emergency.ui.mine.contact.view.EmergencyAddContactActivity" />
+        <activity android:name="com.tjmedicine.emergency.ui.mine.health.HealthAddFileActivity" />
+        <activity android:name="com.tjmedicine.emergency.ui.mine.health.HealthFileActivity" />
+        <activity android:name=".ui.login.view.activity.LoginActivity" />
+        <activity android:name="com.yalantis.ucrop.UCropActivity" />
+        <activity android:name=".ui.me.view.PersonalActivity" />
+        <activity android:name=".ui.mine.health.HealthFileDetailActivity" />
+        <activity android:name=".ui.mseeage.systemInformation.SystemInformationActivity" />
+        <activity android:name=".ui.equipment.EquipmentActivity" />
+        <activity
+            android:name=".ui.teach.view.TeachingDetailActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.other.AboutActivity" />
+        <activity android:name=".ui.other.ProductBriefActivity" />
+        <activity android:name=".ui.other.CompanyProfileActivity" />
+        <activity android:name=".ui.other.AccessFeedbackActivity" />
+        <activity android:name=".ui.other.AndroidOPermissionActivity" />
+        <activity android:name=".ui.teach.view.test" />
+        <activity android:name=".ui.other.WebActivity" />
+        <activity android:name=".ui.uart.SettingActivity" />
+
+
+        <activity
+            android:name="com.amap.api.navi.AmapRouteActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|navigation"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name=".ui.navi.NaviActivity" />
+
+        <receiver android:name="com.mob.pushsdk.plugins.huawei.PushHaiWeiRevicer">
+
+            <intent-filter>
+
+                <action android:name="com.huawei.android.push.intent.REGISTRATION" />
+
+                <action android:name="com.huawei.android.push.intent.RECEIVE" />
+
+                <action android:name="com.huawei.android.push.intent.CLICK" />
+
+                <action android:name="com.huawei.intent.action.PUSH_STATE" />
+
+                <action android:name="com.huawei.intent.action.PUSH_DELAY_NOTIFY" />
+
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

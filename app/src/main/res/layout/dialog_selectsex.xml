@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <TextView
+            android:id="@+id/txt_cancel"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="#ff999999"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:textColor="#F21743"
+            android:id="@+id/txt_confirm"
+            android:textSize="16sp"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="完成" />
+
+    </LinearLayout>
+
+    <com.tjmedicine.emergency.model.widget.SelectSexWheelView
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:id="@+id/selSex"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp">
+
+    </com.tjmedicine.emergency.model.widget.SelectSexWheelView>
+
+</LinearLayout>

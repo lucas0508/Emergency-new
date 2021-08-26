@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">121急救</string>
+
+
+    <string name="rb_tab_menu_homepage">首页</string>
+    <string name="rb_tab_menu_material">急救学堂</string>
+    <string name="rb_tab_menu_mypage">我的</string>
+    <integer name="animation_default_duration">300</integer>
+    <integer name="animation_default_duration_1500">1500</integer>
+</resources>
