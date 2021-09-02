@@ -1,7 +1,10 @@
 package com.tjmedicine.emergency.ui.main;
 
+import android.Manifest;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -13,6 +16,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -32,9 +36,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -80,6 +87,7 @@ import com.tjmedicine.emergency.common.dialog.DistanceDialog;
 import com.tjmedicine.emergency.common.dialog.TaskSucDialog;
 import com.tjmedicine.emergency.common.global.Constants;
 import com.tjmedicine.emergency.common.server.LocationService;
+import com.tjmedicine.emergency.ui.device.DeviceActivity;
 import com.tjmedicine.emergency.ui.login.view.activity.LoginActivity;
 import com.tjmedicine.emergency.ui.map.Cluster;
 import com.tjmedicine.emergency.ui.map.ClusterClickListener;
@@ -98,7 +106,9 @@ import com.tjmedicine.emergency.ui.uart.UARTActivity;
 import com.tjmedicine.emergency.ui.uart.data.presenter.IUARTControlView;
 import com.tjmedicine.emergency.ui.uart.data.presenter.PDScoreData;
 import com.tjmedicine.emergency.ui.uart.data.presenter.UARTControlPresenter;
+import com.tjmedicine.emergency.ui.uart.profile.BleProfileServiceReadyActivity;
 import com.tjmedicine.emergency.utils.AnimUtil;
+import com.tjmedicine.emergency.utils.DevicePermissionsUtils;
 import com.tjmedicine.emergency.utils.GifLoadOneTimeGif;
 
 import java.io.IOException;
@@ -108,6 +118,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -146,6 +157,8 @@ public class HomePageFragment extends BaseFragment implements AMap.OnMapLoadedLi
     ImageView mEquipment;
     @BindView(R.id.iv_car)
     ImageView mCar;
+    @BindView(R.id.permission_rationale)
+    View permissionRationale;
     private AMap aMap;
     public View mView;
 
@@ -168,6 +181,7 @@ public class HomePageFragment extends BaseFragment implements AMap.OnMapLoadedLi
 
     //当前点击的marker
     private Marker clickMaker;
+    private final static int REQUEST_PERMISSION_REQ_CODE = 34; // any 8-bit number
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -241,24 +255,31 @@ public class HomePageFragment extends BaseFragment implements AMap.OnMapLoadedLi
             @Override
             public void onMultiClick(View v) {
                 if (mApp.isLogin()) {
-                    mApp.getOptionDialog().show("请选择模式", new String[]{"1", "2"}, position -> {
-                        /**
-                         * type  1: 练习
-                         *       2：测试
-                         *       3：考试
-                         */
-                        Bundle bundle = new Bundle();
-                        if (position == 0) {
-                            bundle.putString("mode", "1");
-                        } else if (position == 1) {
-                            bundle.putString("mode", "2");
-                        }
+                    if (isBLEEnabled()) {
+                        Logger.d("11111");
+                        mApp.getOptionDialog().show("请选择模式", new String[]{"1", "2"}, position -> {
+                            /**
+                             * type  1: 练习
+                             *       2：测试
+                             *       3：考试
+                             */
+                            Bundle bundle = new Bundle();
+                            if (position == 0) {
+                                bundle.putString("mode", "1");
+                            } else if (position == 1) {
+                                bundle.putString("mode", "2");
+                            }
 //                    else if (position == 2) {
 //                        //添加实名认证
 //                        bundle.putString("mode", "3");
 //                    }
-                        startActivity(UARTActivity.class, bundle);
-                    });
+                            startActivity(UARTActivity.class, bundle);
+                        });
+                    }else {
+                        Logger.d("22222");
+                        showBLEDialog();
+                    }
+
                 } else {
                     startActivity(LoginActivity.class);
                 }
@@ -333,8 +354,8 @@ public class HomePageFragment extends BaseFragment implements AMap.OnMapLoadedLi
             @Override
             public void onMultiClick(View v) {
                 AnimUtil.starAnim2(mEquipment);
-                mApp.shortToast("攻城狮正在开发中...");
-                // startActivity(SystemInformationActivity.class);
+                startActivity(DeviceActivity.class);
+
             }
         });
         iv_common_right.setOnClickListener(new OnMultiClickListener() {
@@ -346,6 +367,17 @@ public class HomePageFragment extends BaseFragment implements AMap.OnMapLoadedLi
         });
 
     }
+
+    protected boolean isBLEEnabled() {
+        final BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        return adapter != null && adapter.isEnabled();
+    }
+
+    protected void showBLEDialog() {
+        final Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+        startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+    }
+    protected static final int REQUEST_ENABLE_BT = 2;
 
     @Override
     protected void initView() {
@@ -430,6 +462,39 @@ public class HomePageFragment extends BaseFragment implements AMap.OnMapLoadedLi
             }
         }
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(final int requestCode, final @NonNull String[] permissions, final @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_PERMISSION_REQ_CODE: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // We have been granted the Manifest.permission.ACCESS_FINE_LOCATION permission. Now we may proceed with scanning.
+                    mApp.getOptionDialog().show("请选择模式", new String[]{"1", "2"}, position -> {
+                        /**
+                         * type  1: 练习
+                         *       2：测试
+                         *       3：考试
+                         */
+                        Bundle bundle = new Bundle();
+                        if (position == 0) {
+                            bundle.putString("mode", "1");
+                        } else if (position == 1) {
+                            bundle.putString("mode", "2");
+                        }
+//                    else if (position == 2) {
+//                        //添加实名认证
+//                        bundle.putString("mode", "3");
+//                    }
+                        startActivity(UARTActivity.class, bundle);
+                    });
+                } else {
+                    permissionRationale.setVisibility(View.VISIBLE);
+                    Toast.makeText(getActivity(), "没有权限.", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+        }
     }
 
     @Override

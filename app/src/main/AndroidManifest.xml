@@ -29,8 +29,8 @@
 
     <!--这个权限用于允许程序在手机屏幕关闭后后台进程仍然运行-->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-<!--    读取关于联系人权限-->
-<!--    <uses-permission android:name="android.permission.READ_CONTACTS" />-->
+    <!--    读取关于联系人权限-->
+    <!--    <uses-permission android:name="android.permission.READ_CONTACTS" />-->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -60,10 +60,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
+        android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.Emergency"
         android:usesCleartextTraffic="true"
-        android:requestLegacyExternalStorage="true"
         tools:replace="android:icon,android:theme">
 
         <!--//    设计图纸 大小 -->
@@ -88,7 +88,7 @@
             android:value="d77b2c007f66d27e67c0aa87629db9e4" />
         <meta-data
             android:name="PGYER_FRONTJS_KEY"
-            android:value="166245569011c4b7ef03694280d060da"/>
+            android:value="166245569011c4b7ef03694280d060da" />
 
         <activity
             android:name=".ui.splash.SplashActivity"
@@ -193,7 +193,7 @@
         <activity android:name=".ui.teach.view.test" />
         <activity android:name=".ui.other.WebActivity" />
         <activity android:name=".ui.uart.SettingActivity" />
-
+        <activity android:name=".ui.device.DeviceActivity" />
 
         <activity
             android:name="com.amap.api.navi.AmapRouteActivity"

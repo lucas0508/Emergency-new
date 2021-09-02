@@ -33,7 +33,6 @@
     <include layout="@layout/base_title_layout"/>
 
 	<TextView
-
 		android:id="@+id/permission_rationale"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"

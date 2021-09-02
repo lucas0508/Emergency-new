@@ -12,10 +12,14 @@ import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import com.facebook.stetho.common.LogUtil;
 import com.tjmedicine.emergency.common.dialog.DialogManage;
+import com.tjmedicine.emergency.common.global.Constants;
 
+import java.util.List;
 import java.util.Objects;
 import butterknife.ButterKnife;
 
@@ -46,6 +50,8 @@ public abstract class BaseFragment extends Fragment {
     protected boolean isDataInitiated;
 
     private static final String STATE_SAVE_IS_HIDDEN = "STATE_SAVE_IS_HIDDEN";
+
+    private BaseActivity.PermissionListener mListener;
 
     @Nullable
     @Override
@@ -135,7 +141,23 @@ public abstract class BaseFragment extends Fragment {
     protected void lazyLoad() {
 
     }
-
+    /**
+     * 授权运行
+     *
+     * @param permissionList 需要权限
+     * @param listener       权限监听
+     */
+    public void requestRunPermission(List<String> permissionList, BaseActivity.PermissionListener listener) {
+        mListener = listener;
+        LogUtil.d("权限：", permissionList.toArray());
+        LogUtil.d("权限数量：", permissionList.size());
+        if (!permissionList.isEmpty()) {
+            ActivityCompat.requestPermissions(requireActivity(), permissionList.toArray(new String[permissionList.size()]), Constants.All_PERMISSIONS_CODE);
+        } else {
+            //表示全都授权了
+            mListener.onGranted();
+        }
+    }
 
 
     @Override

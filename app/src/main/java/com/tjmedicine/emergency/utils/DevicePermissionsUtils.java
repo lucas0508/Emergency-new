@@ -10,11 +10,13 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.view.View;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 
+import com.orhanobut.logger.Logger;
 import com.tjmedicine.emergency.EmergencyApplication;
 import com.tjmedicine.emergency.common.global.Constants;
 
@@ -85,6 +87,12 @@ public class DevicePermissionsUtils {
         return permisstionList;
     }
 
+    public static List<String> autoObtainNeedAllPermission1(Activity context) {
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            permisstionList.add(Manifest.permission.BLUETOOTH_ADMIN);
+        }
+        return permisstionList;
+    }
 
     public static List<String> autoObtainNeedAllPermission(Activity context) {
         //位置
