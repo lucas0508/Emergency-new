@@ -116,11 +116,11 @@ class DeviceListAdapter extends BaseAdapter {
 				return listValues.get(position - 1);
 		} else {
 			if (position == 0)
-				return R.string.scanner_subtitle_bonded;
+				return R.string.scanner_subtitle_not_bonded; //scanner_subtitle_not_bonded
 			if (position < bondedCount)
 				return listBondedValues.get(position - 1);
 			if (position == bondedCount)
-				return R.string.scanner_subtitle_not_bonded;
+				return R.string.scanner_subtitle_bonded;
 			return listValues.get(position - bondedCount - 1);
 		}
 	}

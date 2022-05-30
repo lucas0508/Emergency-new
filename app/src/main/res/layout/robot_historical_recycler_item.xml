@@ -18,39 +18,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <com.tjmedicine.emergency.model.widget.BGAProgressBar
-                    android:id="@+id/bga_pd_progress"
-                    style="@android:style/Widget.ProgressBar.Horizontal"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:padding="5dp"
-                    app:bga_pb_isCapRounded="false"
-                    app:bga_pb_isHiddenText="false"
-                    app:bga_pb_mode="circle"
-                    app:bga_pb_radius="24dp"
-                    app:bga_pb_reachedColor="#F7B829"
-                    app:bga_pb_reachedHeight="4dp"
-                    app:bga_pb_textColor="#FFC73B"
-                    app:bga_pb_textMargin="8dp"
-                    app:bga_pb_textSize="14sp"
-                    app:bga_pb_unReachedColor="#F5F5F5"
-                    app:bga_pb_unReachedHeight="2dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="按压强度(Pa)"
-                    android:textColor="#ffc0c5cc"
-                    android:textSize="14sp" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -61,6 +28,7 @@
 
                 <com.tjmedicine.emergency.model.widget.BGAProgressBar
                     android:id="@+id/bga_pdcount_progress"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:padding="5dp"
@@ -74,18 +42,19 @@
                     app:bga_pb_textMargin="8dp"
                     app:bga_pb_textSize="14sp"
                     app:bga_pb_unReachedColor="#F5F5F5"
-                    app:bga_pb_unReachedHeight="2dp"
-                    style="@android:style/Widget.ProgressBar.Horizontal"
-                    />
+                    app:bga_pb_unReachedHeight="2dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="按压次数(次)"
-                    android:textColor="#ffc0c5cc"
+                    android:text="按压合格次数(次)"
+                    android:textColor="#666666"
                     android:textSize="14sp" />
+
+
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -96,8 +65,8 @@
 
                 <com.tjmedicine.emergency.model.widget.BGAProgressBar
                     android:id="@+id/bga_blow_progress"
-                    android:layout_width="64dp"
                     style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="64dp"
                     android:layout_height="64dp"
                     app:bga_pb_isCapRounded="false"
                     app:bga_pb_isHiddenText="false"
@@ -115,12 +84,85 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="人工呼吸(次)"
-                    android:textColor="#ffc0c5cc"
+                    android:textColor="#666666"
                     android:textSize="14sp" />
             </LinearLayout>
 
+
         </LinearLayout>
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="按压频率为:"
+                android:textColor="#666666"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_report_pd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XXX 次/分"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="按压深度合格率为:"
+                android:textColor="#666666"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_report_pd_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XX %"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="胸廓完全回弹合格率为:"
+                android:textColor="#666666"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_pd_rebound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XX %"
+                android:textSize="16sp" />
+
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
@@ -131,26 +173,32 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
-                android:layout_weight="1"
+                android:layout_marginTop="10dp"
                 android:text="2020-12-14 11:32"
                 android:textColor="#ffc0c5cc"
                 android:textSize="16sp" />
 
+
             <TextView
                 android:id="@+id/tv_score"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:text="21"
+                android:gravity="right"
+                android:text="再接再厉哦"
                 android:textColor="#ffe4361f"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
         </LinearLayout>
     </LinearLayout>

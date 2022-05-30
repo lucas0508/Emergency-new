@@ -67,13 +67,13 @@ public class GsonUtils {
         String str = "";
         if (TextUtils.isEmpty(data))
             return null;
-        if (data.contains("Blow")) {
-            String splitter = "<";
-            String splitter1 = ">";
-            String regex = "^" + splitter + "*|" + splitter1 + "*$";
-            str = data.replaceAll(regex, "");
-            return str;
-        }
+//        if (data.contains("Blow")) {
+//            String splitter = "<";
+//            String splitter1 = ">";
+//            String regex = "^" + splitter + "*|" + splitter1 + "*$";
+//            str = data.replaceAll(regex, "");
+//            return str;
+//        }
         if (data.startsWith("<") && data.endsWith(">") && data.contains("|")) {
             String splitter = "<";
             String splitter1 = ">";
@@ -93,6 +93,14 @@ public class GsonUtils {
                         //PD=0,0,0,0,0,0
                         str = split[1];
                         System.out.println("returnFormatText2: split2=  dstr==" + str);
+                    }
+                }
+                if (s.startsWith("Blow=")) {
+                    String[] split = s.split("=");
+                    if (split.length > 1) {
+                        //PD=0,0,0,0,0,0
+                        str = split[1];
+                        System.out.println("returnFormatText2: Blow=  Blow==" + str);
                     }
                 }
                 if (s.startsWith("Battery=")) {//电池电量 单位百分比
@@ -164,7 +172,7 @@ public class GsonUtils {
         //手机->设备	Start
         if ("Blow".equals(data)) {
 
-            return "吹起成功：" + data;
+            return "吹气成功：" + data;
         }
         if ("PD".startsWith(data)) {
             String[] split = data.split("=");

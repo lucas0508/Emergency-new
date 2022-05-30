@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@android:color/transparent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--  -->
+
+    <ImageView
+
+        android:id="@+id/triangle"
+        android:src="@drawable/black_vector_triangle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/triangle"
+        android:padding="6dp"
+        android:background="@drawable/shape_tip_popview_background"
+        android:textColor="#ffffff"
+        android:text="关于病情的描述系本软件结合医疗机器检查情况与大数据综合分析的结果，仅供您参考，可能由于网络或软件稳定性相关问题出现误差等情况，如您对相应检查结果及分析建议存在任何异议的，建议前往医院复诊确认"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

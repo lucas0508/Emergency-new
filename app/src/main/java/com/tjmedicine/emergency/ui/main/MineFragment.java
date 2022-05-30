@@ -1,9 +1,11 @@
 package com.tjmedicine.emergency.ui.main;
 
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,6 +26,7 @@ import com.tjmedicine.emergency.ui.mine.health.HealthFileActivity;
 import com.tjmedicine.emergency.ui.mine.volunteer.view.ApplyVolunteerActivity;
 import com.tjmedicine.emergency.ui.other.AboutActivity;
 import com.tjmedicine.emergency.ui.other.AccessFeedbackActivity;
+import com.tjmedicine.emergency.ui.other.WebActivity;
 import com.tjmedicine.emergency.ui.uart.SettingActivity;
 import com.tjmedicine.emergency.utils.ToastUtils;
 
@@ -31,6 +34,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.tjmedicine.emergency.common.global.Constants.WEB_KEY_FLAG;
+import static com.tjmedicine.emergency.common.global.Constants.WEB_KEY_URL;
 
 public class MineFragment extends BaseFragment {
 
@@ -41,6 +47,9 @@ public class MineFragment extends BaseFragment {
     ImageButton mClose;
     @BindView(R.id.ll_login)
     LinearLayout ll_login;
+
+    @BindView(R.id.ll_my_health_mall)
+    LinearLayout ll_my_health_mall;
     @BindView(R.id.ll_login_success)
     LinearLayout ll_login_success;
     @BindView(R.id.tv_nick_name)
@@ -49,6 +58,10 @@ public class MineFragment extends BaseFragment {
     TextView mPersonSign;
     @BindView(R.id.civ_header)
     CircleImageView mHeader;
+
+
+
+
     CustomDjsFullScreenPopup customDjsFullScreenPopup;
     private int i = -1;
 
@@ -57,7 +70,12 @@ public class MineFragment extends BaseFragment {
         mTitle.setText("个人中心");
         mClose.setVisibility(View.GONE);
 
+
+
+
     }
+
+
 
     @Override
     public void onResume() {
@@ -82,6 +100,7 @@ public class MineFragment extends BaseFragment {
                     .load(UserInfo.getUserInfoImage()).into(mHeader);
         } else {
             mHeader.setEnabled(false);
+            mHeader.setImageResource(R.mipmap.head);
             ll_login.setVisibility(View.VISIBLE);
             ll_login_success.setVisibility(View.GONE);
         }
@@ -94,7 +113,7 @@ public class MineFragment extends BaseFragment {
 
     @OnClick({R.id.btn_login, R.id.ll_my_apply, R.id.ll_my_verified, R.id.ll_my_health_file,
             R.id.ll_about_us, R.id.ll_feedback, R.id.tv_apply_volunteer, R.id.tv_verified
-            , R.id.tv_set_emergency_contact, R.id.ll_login_success, R.id.civ_header})
+            , R.id.tv_set_emergency_contact, R.id.ll_login_success, R.id.civ_header,R.id.ll_my_health_mall})
     public void initOnClick(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
@@ -150,6 +169,16 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.ll_about_us:
                 startActivity(AboutActivity.class);
+                break;
+            case R.id.ll_my_health_mall:
+
+                //健康商城
+                    String userPhone = UserInfo.getUserPhone();
+                    String url = "http://os.mengyuanyiliao.com/wap"+"?type=1";
+                    Intent intent = new Intent(getActivity(), WebActivity.class);
+                    intent.putExtra(WEB_KEY_URL, url);
+                    intent.putExtra(WEB_KEY_FLAG, 1);
+                    startActivity(intent);
 
                 break;
             case R.id.ll_feedback:

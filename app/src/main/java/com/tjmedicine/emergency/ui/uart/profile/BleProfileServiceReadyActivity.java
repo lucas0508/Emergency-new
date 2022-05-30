@@ -454,13 +454,13 @@ public abstract class BleProfileServiceReadyActivity<E extends BleProfileService
         if (isBLEEnabled()) {
             // isBLEEnabled()
             if (service == null) {
-                setDefaultUI();
+//                setDefaultUI();
                 //x搜索所有的可连接蓝牙，用户自行连接
-                // showDeviceScanningDialog(getFilterUUID());
+                 showDeviceScanningDialog(getFilterUUID());
 
-                showDeviceScanningDialog(UART_SERVICE_UUID);
+//                showDeviceScanningDialog(UART_SERVICE_UUID);
                 //x自动根据UUID连接脸呀
-                //connectBLE();
+//                connectBLE();
             } else {
                 if (serviceBinder != null) {
                     serviceBinder.send("<M><TestStop></M>");

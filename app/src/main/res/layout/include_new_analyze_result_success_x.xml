@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
+    android:orientation="vertical"
+    android:background="#eeeeee"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:background="@android:color/white"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="156dp">
+        <TextView
+            android:id="@+id/include_new_analyze_result_success_title_x"
+
+            android:layout_margin="16dp"
+            android:textColor="#333333"
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/include_new_analyze_result_success_heart_rate_x"
+            android:drawableLeft="@mipmap/icon_hr"
+            android:layout_alignParentRight="true"
+            android:layout_margin="16dp"
+            android:textColor="#333333"
+            android:text="100bpm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:scaleType="fitXY"
+            android:id="@+id/include_new_analyze_result_success_ecg_pic_x"
+            android:src="@color/divider"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_below="@+id/include_new_analyze_result_success_heart_rate_x"
+            android:layout_above="@+id/include_new_analyze_result_success_test_time_x"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+         <TextView
+             android:textColor="#888888"
+             android:id="@+id/include_new_analyze_result_success_test_time_x"
+             android:layout_marginBottom="16dp"
+             android:layout_marginLeft="16dp"
+             android:layout_alignParentBottom="true"
+
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"/>
+        <TextView
+            android:textColor="#888888"
+            android:id="@+id/include_new_analyze_result_success_ecg_length_x"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentBottom="true"
+            android:text="时长:60s"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="108dp">
+        <TextView
+
+            android:text="心率分析"
+
+            android:layout_margin="16dp"
+            android:textColor="#333333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/include_new_analyze_result_success_ecg_heart_x"
+                android:text="100 bpm\n平均心率"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+
+            <TextView
+                android:id="@+id/include_new_analyze_result_success_ecg_heart_max_x"
+                android:text="120 bpm\n最高心率"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+
+            <TextView
+                android:id="@+id/include_new_analyze_result_success_ecg_heart_min_x"
+
+                android:text="58 bpm\n最低心率"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="96dp">
+        <TextView
+            android:id="@+id/include_new_analyze_result_success_ecg_heart_normal_x"
+
+            android:text="45%\n正常心率\n(60-100bpm)"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+        <TextView
+            android:id="@+id/include_new_analyze_result_success_ecg_heart_quick_x"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="50%\n心率偏快\n(>100bpm)" />
+
+
+        <TextView
+            android:id="@+id/include_new_analyze_result_success_ecg_heart_slow_x"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:padding="16dp"
+                android:id="@+id/include_impress_heart_text"
+                android:text="心电分析印象"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/include_impress_heart_x"
+                android:layout_marginTop="16dp"
+                android:layout_toRightOf="@+id/include_impress_heart_text"
+                android:src="@mipmap/icon_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/include_new_analyze_result_success_ecg_heart_ecg_result_x"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/shape_measure_bg"
+            android:lineSpacingExtra="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/include_impress_bianyixingzhishu"
+                    android:text="心率变异性指数"
+                    android:layout_marginLeft="8dp"
+                    android:padding="8dp"
+                    android:layout_centerVertical="true"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/include_impress_bianyixingzhishu_x"
+                    android:layout_marginTop="16dp"
+                    android:layout_toRightOf="@+id/include_impress_bianyixingzhishu"
+                    android:background="@mipmap/icon_tip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+                <TextView
+
+                    android:layout_toLeftOf="@id/arrow"
+                    android:id="@+id/allHRV"
+                    android:text="123111"
+                    android:gravity="right|center_vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:visibility="gone"
+                    />
+                <TextView
+                    android:id="@+id/arrow"
+                    android:gravity="right|center_vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="8dp"
+                    android:drawableRight="@mipmap/icon_arrow"
+                    />
+
+            </RelativeLayout>
+
+
+
+            <Space
+                android:id="@+id/after_pay_view0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/table_layout_hrv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.tjmedicine.emergency.ui.device.ecg.helowin.sdk.widget.HrJinDuViewOne
+                    android:id="@+id/act_result_id0"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <com.tjmedicine.emergency.ui.device.ecg.helowin.sdk.widget.JinDuView
+                    android:id="@+id/act_result_id1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" />
+
+                <com.tjmedicine.emergency.ui.device.ecg.helowin.sdk.widget.JinDuView
+                    android:id="@+id/act_result_id2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" />
+
+                <com.tjmedicine.emergency.ui.device.ecg.helowin.sdk.widget.JinDuView
+                    android:id="@+id/act_result_id3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="心电测量指标"
+
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="8dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/xindianceliangzhibiao_x"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:layout_centerVertical="true"
+                android:id="@+id/xindianceliangzhibiao"
+                android:layout_marginTop="16dp"
+                android:layout_toRightOf="@+id/xindianceliangzhibiao_x"
+                android:src="@mipmap/icon_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/clzhibiaocount"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:visibility="gone"
+                android:drawableRight="@mipmap/icon_arrow"
+                />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+                android:gravity="center"
+
+                android:text="测量指标"
+                android:textColor="#888888" />
+
+            <TextView
+                android:id="@+id/item_watch_target_list_measure_value"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="结果"
+                android:textColor="#888888" />
+
+            <TextView
+                android:id="@+id/item_watch_target_list_measure_target"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="参考范围"
+                android:textColor="#888888" />
+
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/act_rl_view_list_x"
+            android:nestedScrollingEnabled="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+
+
+<TextView
+    android:textSize="12sp"
+    android:paddingLeft="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:textColor="#888888"
+    android:text="以上内容仅供参考，不能作为医疗诊断和治疗的依据"/>
+
+</LinearLayout>
+</androidx.core.widget.NestedScrollView>

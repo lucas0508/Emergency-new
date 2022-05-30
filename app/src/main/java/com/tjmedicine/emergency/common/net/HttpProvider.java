@@ -103,6 +103,7 @@ public class HttpProvider {
         headers.set("phoneVersion", DevicePermissionsUtils.getSystemVersion());
         headers.set("largeVersion", DevicePermissionsUtils.getAppMaxVersion());
         headers.set("minorVersion", DevicePermissionsUtils.getAppMinVersion());
+        headers.set("Authorization", authorization);
         if (!TextUtils.isEmpty(authorization)) {
             headers.set("Authorization", authorization);//dfYAwSKczd1h1hIsiReNB9TE6Al+D2TOwL6oFCKhxLX1bSMoMNyblwxrts8uthImGkJvl5Tk17gaFWcIw39OBa==
         }

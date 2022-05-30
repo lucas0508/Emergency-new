@@ -230,6 +230,92 @@ public class UARTBean {
         private int uid;
         private int type;
 
+        private Integer pdQualifiedCount; // 按压合格次数
+
+        private String pdRebound; //胸廓完全回弹合格率
+
+        private String pdFrequency; //按压频率
+
+        private String pdDepth; //按压深度合格率
+
+        private String pdTotalCount; //按压总次数
+
+        private Integer blowCount;
+
+        /**
+         * 评估结果（0： 还需加油，多加练习，再接再厉哦；1：真棒！你是心肺复苏小能手。）
+         */
+        private String pdResult;
+
+        public String getPdResultStr() {
+            if (null != pdResult) {
+                if (pdResult.equals("1")) {
+                    pdResult = "真棒！你是心肺复苏小能手";
+                } else if (pdResult.equals("0")) {
+                    pdResult = "还需加油,多加练习,再接再厉哦";
+                }
+                return pdResult;
+            }
+            return "";
+        }
+
+        public String getPdResult() {
+            return pdResult;
+        }
+
+        public void setPdResult(String pdResult) {
+            this.pdResult = pdResult;
+        }
+
+        public Integer getBlowCount() {
+            return blowCount;
+        }
+
+        public void setBlowCount(Integer blowCount) {
+            this.blowCount = blowCount;
+        }
+
+        public Integer getPdQualifiedCount() {
+            return pdQualifiedCount;
+        }
+
+        public void setPdQualifiedCount(Integer pdQualifiedCount) {
+            this.pdQualifiedCount = pdQualifiedCount;
+        }
+
+        public String getPdRebound() {
+            return pdRebound;
+        }
+
+        public void setPdRebound(String pdRebound) {
+            this.pdRebound = pdRebound;
+        }
+
+        public String getPdFrequency() {
+            return pdFrequency;
+        }
+
+        public void setPdFrequency(String pdFrequency) {
+            this.pdFrequency = pdFrequency;
+        }
+
+        public String getPdDepth() {
+            return pdDepth;
+        }
+
+        public void setPdDepth(String pdDepth) {
+            this.pdDepth = pdDepth;
+        }
+
+        public String getPdTotalCount() {
+            return pdTotalCount;
+        }
+
+        public void setPdTotalCount(String pdTotalCount) {
+            this.pdTotalCount = pdTotalCount;
+        }
+
+
         public String getId() {
             return id;
         }

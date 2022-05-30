@@ -75,6 +75,7 @@ import com.amap.api.navi.model.AMapNaviLocation;
 import com.google.gson.Gson;
 import com.lxj.xpopup.XPopup;
 import com.orhanobut.logger.Logger;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tjmedicine.emergency.EmergencyApplication;
 import com.tjmedicine.emergency.R;
 import com.tjmedicine.emergency.common.base.BaseActivity;
@@ -84,9 +85,7 @@ import com.tjmedicine.emergency.common.bean.MapDataBeen;
 import com.tjmedicine.emergency.common.cache.SharedPreferences.UserInfo;
 import com.tjmedicine.emergency.common.dialog.DialogManage;
 import com.tjmedicine.emergency.common.dialog.DistanceDialog;
-import com.tjmedicine.emergency.common.dialog.TaskSucDialog;
 import com.tjmedicine.emergency.common.global.Constants;
-import com.tjmedicine.emergency.common.server.LocationService;
 import com.tjmedicine.emergency.ui.device.DeviceActivity;
 import com.tjmedicine.emergency.ui.login.view.activity.LoginActivity;
 import com.tjmedicine.emergency.ui.map.Cluster;
@@ -98,18 +97,9 @@ import com.tjmedicine.emergency.ui.map.RegionItem;
 import com.tjmedicine.emergency.ui.map.presenter.IMapDataView;
 import com.tjmedicine.emergency.ui.map.presenter.MapDataPresenter;
 import com.tjmedicine.emergency.ui.mseeage.systemInformation.SystemInformationActivity;
-import com.tjmedicine.emergency.ui.navi.NaviActivity;
-import com.tjmedicine.emergency.ui.navi.TabFragment;
-import com.tjmedicine.emergency.ui.other.WebActivity;
-import com.tjmedicine.emergency.ui.uart.SettingActivity;
+import com.tjmedicine.emergency.ui.transport.transportActivity;
 import com.tjmedicine.emergency.ui.uart.UARTActivity;
-import com.tjmedicine.emergency.ui.uart.data.presenter.IUARTControlView;
-import com.tjmedicine.emergency.ui.uart.data.presenter.PDScoreData;
-import com.tjmedicine.emergency.ui.uart.data.presenter.UARTControlPresenter;
-import com.tjmedicine.emergency.ui.uart.profile.BleProfileServiceReadyActivity;
 import com.tjmedicine.emergency.utils.AnimUtil;
-import com.tjmedicine.emergency.utils.DevicePermissionsUtils;
-import com.tjmedicine.emergency.utils.GifLoadOneTimeGif;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -178,7 +168,7 @@ public class HomePageFragment extends BaseFragment implements AMap.OnMapLoadedLi
     private CustomMapStyleOptions mapStyleOptions;
     private View infoWindow;
     public DialogManage mApp;
-
+    private IWXAPI api;
     //当前点击的marker
     private Marker clickMaker;
     private final static int REQUEST_PERMISSION_REQ_CODE = 34; // any 8-bit number
@@ -190,10 +180,7 @@ public class HomePageFragment extends BaseFragment implements AMap.OnMapLoadedLi
         if (mapView != null) {
             mapView.onSaveInstanceState(outState);
         }
-
-
     }
-
 
     @Nullable
     @Override
@@ -217,7 +204,6 @@ public class HomePageFragment extends BaseFragment implements AMap.OnMapLoadedLi
         initListener();
 
         return mView;
-
     }
 
     private void initListener() {
@@ -246,7 +232,6 @@ public class HomePageFragment extends BaseFragment implements AMap.OnMapLoadedLi
                                                 .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                                     }
                                 }, 7000);
-
                             }
                         }).show();
             }
@@ -256,7 +241,6 @@ public class HomePageFragment extends BaseFragment implements AMap.OnMapLoadedLi
             public void onMultiClick(View v) {
                 if (mApp.isLogin()) {
                     if (isBLEEnabled()) {
-                        Logger.d("11111");
                         mApp.getOptionDialog().show("请选择模式", new String[]{"1", "2"}, position -> {
                             /**
                              * type  1: 练习
@@ -275,8 +259,7 @@ public class HomePageFragment extends BaseFragment implements AMap.OnMapLoadedLi
 //                    }
                             startActivity(UARTActivity.class, bundle);
                         });
-                    }else {
-                        Logger.d("22222");
+                    } else {
                         showBLEDialog();
                     }
 
@@ -343,11 +326,8 @@ public class HomePageFragment extends BaseFragment implements AMap.OnMapLoadedLi
         mCar.setOnClickListener(new OnMultiClickListener() {
             @Override
             public void onMultiClick(View v) {
-                String url = "http://transport.mengyuanyiliao.com/h5/#/";
-                Intent intent = new Intent(getActivity(), WebActivity.class);
-                intent.putExtra(WEB_KEY_URL, url);
-                intent.putExtra(WEB_KEY_FLAG, 1);
-                startActivity(intent);
+                AnimUtil.starAnim2(mEquipment);
+                startActivity(transportActivity.class);
             }
         });
         mEquipment.setOnClickListener(new OnMultiClickListener() {
@@ -355,13 +335,13 @@ public class HomePageFragment extends BaseFragment implements AMap.OnMapLoadedLi
             public void onMultiClick(View v) {
                 AnimUtil.starAnim2(mEquipment);
                 startActivity(DeviceActivity.class);
-
             }
         });
         iv_common_right.setOnClickListener(new OnMultiClickListener() {
 
             @Override
             public void onMultiClick(View v) {
+                AnimUtil.starAnim2(mEquipment);
                 startActivity(SystemInformationActivity.class);
             }
         });
@@ -377,6 +357,7 @@ public class HomePageFragment extends BaseFragment implements AMap.OnMapLoadedLi
         final Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
     }
+
     protected static final int REQUEST_ENABLE_BT = 2;
 
     @Override
@@ -774,8 +755,8 @@ public class HomePageFragment extends BaseFragment implements AMap.OnMapLoadedLi
             infoWindow = LayoutInflater.from(requireActivity()).inflate(R.layout.homepage_click_item, null);
         }
         render(marker, infoWindow);
-        return infoWindow;
-        // TODO: 2021-01-21 地图点击显示View  暂时注释
+        return null;
+        // TODO: 2021-01-21 地图点击显示View  暂时注释     有需求修改 return infoWindow;
     }
 
     private void render(Marker marker, View view) {
@@ -841,8 +822,8 @@ public class HomePageFragment extends BaseFragment implements AMap.OnMapLoadedLi
             items.add(regionItem);
         }
         mClusterOverlay = new ClusterOverlay(aMap, items,
-                dp2px(getActivity().getApplicationContext(), clusterRadius),
-                getActivity().getApplicationContext(), role);
+                dp2px(EmergencyApplication.getContext(), clusterRadius),
+                EmergencyApplication.getContext(), role);
         mClusterOverlay.setClusterRenderer(HomePageFragment.this);
         mClusterOverlay.setOnClusterClickListener(HomePageFragment.this);
     }

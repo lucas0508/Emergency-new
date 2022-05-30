@@ -37,7 +37,7 @@
         android:gravity="center_vertical">
 
         <ImageButton
-            android:id="@+id/ib_close"
+            android:id="@+id/ib_closeceshi"
             android:layout_width="55dp"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
@@ -123,7 +123,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="120dp"
         android:layout_below="@+id/rel_chart"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
@@ -144,6 +144,7 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:padding="5dp"
+                android:max="200"
                 app:bga_pb_isCapRounded="false"
                 app:bga_pb_isHiddenText="false"
                 app:bga_pb_mode="circle"
@@ -157,6 +158,7 @@
                 app:bga_pb_unReachedHeight="2dp" />
 
             <TextView
+                android:id="@+id/tv_bga_pdcount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -178,6 +180,7 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:padding="5dp"
+                android:max="200"
                 app:bga_pb_isCapRounded="false"
                 app:bga_pb_isHiddenText="false"
                 app:bga_pb_mode="circle"
@@ -190,10 +193,18 @@
                 app:bga_pb_unReachedHeight="3dp" />
 
             <TextView
+                android:id="@+id/tv_bga_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="吹气量"
+                android:textColor="#ffc0c5cc"
+                android:textSize="12sp" />
+            <TextView
                 android:id="@+id/tv_bga_blow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="2dp"
                 android:text="人工呼吸(次)"
                 android:textColor="#ffc0c5cc"
                 android:textSize="14sp" />
@@ -205,7 +216,7 @@
     <LinearLayout
         android:id="@+id/ll_mnr"
         android:layout_width="124dp"
-        android:layout_height="100dp"
+        android:layout_height="120dp"
         android:layout_below="@+id/rel_chart"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="10dp"
@@ -224,7 +235,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:src="@mipmap/mnr" />
+            android:src="@mipmap/mmr" />
 
         <TextView
             android:id="@+id/tv_Battery"

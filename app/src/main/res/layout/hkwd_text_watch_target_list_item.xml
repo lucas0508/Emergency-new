@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/p"
+    android:background="#fafafa"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="28dp">
+    <TextView
+        android:background="#fafafa"
+
+        android:textColor="#333333"
+
+        android:text="你好"
+        android:textSize="14sp"
+        android:paddingLeft="16dp"
+        android:gravity="center_vertical"
+        android:layout_weight="1"
+        android:id="@+id/item_watch_target_list_measure_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:background="#fafafa"
+
+
+            android:paddingRight="8dp"
+            android:layout_centerVertical="true"
+            android:text="基底神经节"
+            android:id="@+id/item_watch_target_list_measure_edit_value"
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:background="@android:color/transparent"
+        android:textSize="14dp"
+        android:textColor="#333333"
+
+        android:id="@+id/item_watch_target_list_measure_target"
+        android:gravity="center_vertical"
+        android:text="你好"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

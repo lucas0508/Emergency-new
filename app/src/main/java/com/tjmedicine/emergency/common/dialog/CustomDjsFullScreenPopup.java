@@ -10,11 +10,8 @@ import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.lxj.xpopup.impl.FullScreenPopupView;
-import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.tjmedicine.emergency.R;
-import com.tjmedicine.emergency.model.widget.KeepCountdownView;
 
 /**
  * 连接
@@ -22,6 +19,7 @@ import com.tjmedicine.emergency.model.widget.KeepCountdownView;
 public class CustomDjsFullScreenPopup extends FullScreenPopupView {
 
     private VideoView mVideoView;
+
     private Context mContext;
     public OnMyCompletionListener onCompletionListener;
 
@@ -47,8 +45,9 @@ public class CustomDjsFullScreenPopup extends FullScreenPopupView {
 
         mVideoView = findViewById(R.id.videoView);
         // 加载视频资源
-        mVideoView.setVideoURI(Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.djs));
 
+//        mVideoView.setVideoPath("http://vfx.mtime.cn/Video/2019/03/18/mp4/190318231014076505.mp4");
+        mVideoView.setVideoURI(Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.aaaa));
         mVideoView.setZOrderOnTop(true);
         //播放
         mVideoView.start();

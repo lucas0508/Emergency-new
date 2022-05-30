@@ -76,7 +76,7 @@
                 android:drawableRight="@mipmap/me_right"
                 android:drawablePadding="6dp"
                 android:gravity="right|center_vertical"
-                android:hint="请选输入与他(她)的关系"
+                android:hint="请输入与他(她)的关系"
                 android:textColor="#626366"
                 android:textSize="14sp" />
 

@@ -1,5 +1,6 @@
 package com.tjmedicine.emergency.ui.uart;
 
+import android.graphics.Color;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -34,8 +35,8 @@ public class UARTRobotActivity extends BaseActivity implements IUARTRobotControl
 
     private UARTRobotControlPresenter uartRobotControlPresenter = new UARTRobotControlPresenter(this);
 
-        @BindView(R.id.tv_title)
-        TextView tv_title;
+    @BindView(R.id.tv_title)
+    TextView tv_title;
 
 
     @Override
@@ -50,7 +51,7 @@ public class UARTRobotActivity extends BaseActivity implements IUARTRobotControl
         mEasyRecyclerView = findViewById(R.id.recycler_view);
 
         initRecyclerView();
-        uartRobotControlPresenter.queryUARTData(null,"");
+        uartRobotControlPresenter.queryUARTData(null, "");
     }
 
 
@@ -63,27 +64,43 @@ public class UARTRobotActivity extends BaseActivity implements IUARTRobotControl
 
                 return new ViewHolder<UARTBean.ListBean>(parent, R.layout.robot_historical_recycler_item) {
 
-                    private TextView mTime, mScore;
-                    private BGAProgressBar bga_pd_progress,
+                    private TextView mTime, mScore, tv_report_pd, tv_report_pd_regular, tv_pd_rebound;
+                    private BGAProgressBar
                             bga_pdcount_progress, bga_blow_progress;
 
                     @Override
                     public void initView() {
                         mTime = $(R.id.tv_time);
                         mScore = $(R.id.tv_score);
-                        bga_pd_progress = $(R.id.bga_pd_progress);
                         bga_pdcount_progress = $(R.id.bga_pdcount_progress);
                         bga_blow_progress = $(R.id.bga_blow_progress);
+                        tv_report_pd = $(R.id.tv_report_pd);
+                        tv_report_pd_regular = $(R.id.tv_report_pd_regular);
+                        tv_pd_rebound = $(R.id.tv_pd_rebound);
                     }
 
                     @Override
                     public void setData(UARTBean.ListBean data) {
                         super.setData(data);
                         mTime.setText(data.getCreateAt());
-                        mScore.setText(String.valueOf(data.getScore()));
-                        bga_pd_progress.setProgress((int) data.getStrengthAverage());
-                        bga_pdcount_progress.setProgress(data.getPressTime());
-                        bga_blow_progress.setProgress(data.getBreatheTime());
+                        if (null != data.getPdResult()) {
+                            if (data.getPdResult().equals("1")) {
+                                mScore.setTextColor(Color.GREEN);
+                            }else {
+                                mScore.setTextColor(Color.RED);
+                            }
+                            mScore.setText(data.getPdResultStr());
+                        }
+                        if (null != data.getPdQualifiedCount())
+                            bga_pdcount_progress.setProgress(data.getPdQualifiedCount());
+                        if (null != data.getBlowCount())
+                            bga_blow_progress.setProgress(data.getBlowCount());
+                        if (null != data.getPdFrequency())
+                            tv_report_pd.setText(data.getPdFrequency() + "次/分");
+                        if (null != data.getPdDepth())
+                            tv_report_pd_regular.setText(data.getPdDepth() + "%");
+                        if (null != data.getPdRebound())
+                            tv_pd_rebound.setText(data.getPdRebound() + "%");
                     }
                 };
             }
@@ -92,14 +109,14 @@ public class UARTRobotActivity extends BaseActivity implements IUARTRobotControl
         mEasyRecyclerView.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                uartRobotControlPresenter.queryUARTData(mAdapter.refreshPage(),"");
+                uartRobotControlPresenter.queryUARTData(mAdapter.refreshPage(), "");
             }
         });
 
         mAdapter.setMore(new RecyclerArrayAdapter.OnMoreListener() {
             @Override
             public void onMoreShow() {
-                uartRobotControlPresenter.queryUARTData(mAdapter.getNextPage(),"");
+                uartRobotControlPresenter.queryUARTData(mAdapter.getNextPage(), "");
             }
 
             @Override
@@ -110,10 +127,9 @@ public class UARTRobotActivity extends BaseActivity implements IUARTRobotControl
     }
 
 
-
     @Override
     public void queryUARTDataSuccess(List<UARTBean.ListBean> uartBeans) {
-        Logger.d("数据返回-》"+uartBeans);
+        Logger.d("数据返回-》" + uartBeans);
         mAdapter.addAll(uartBeans);
     }
 

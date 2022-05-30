@@ -93,7 +93,7 @@ public class UARTActivity extends BleProfileServiceReadyActivity<UARTService.UAR
     UARTControlFragment uartControlFragment;
     UARTControlScoreFragment uartControlScoreFragment;
     UARTControlExamFragment uartControlExamFragment;
-     ScannerFragment dialog;
+    ScannerFragment dialog;
 
     public interface ConfigurationListener {
         void onConfigurationModified();
@@ -182,15 +182,15 @@ public class UARTActivity extends BleProfileServiceReadyActivity<UARTService.UAR
 
 //                setDefaultUI();
                 //x搜索所有的可连接蓝牙，用户自行连接
-                // showDeviceScanningDialog(getFilterUUID());
+//                 showDeviceScanningDialog(getFilterUUID());
                 //x根据UUID搜索可用蓝牙
-                //showDeviceScanningDialog(UART_SERVICE_UUID);
+                showDeviceScanningDialog(UART_SERVICE_UUID);
 //                x自动根据UUID自动连接脸呀
 //                connectBLE();
 
 //                CustomFullScreenPopup customFullScreenPopup = new CustomFullScreenPopup(this);
 //                new XPopup.Builder(this).asCustom(customFullScreenPopup).show();
-                showDeviceScanningDialog(UART_SERVICE_UUID);
+//                showDeviceScanningDialog(UART_SERVICE_UUID);
             } else {
                 if (serviceBinder != null) {
                     serviceBinder.send("<TestStop>");

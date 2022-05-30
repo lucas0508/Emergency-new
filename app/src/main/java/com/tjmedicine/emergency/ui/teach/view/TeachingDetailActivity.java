@@ -33,25 +33,28 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.orhanobut.logger.Logger;
-import com.shuyu.gsyvideoplayer.GSYVideoManager;
-import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
-import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
-import com.shuyu.gsyvideoplayer.listener.LockClickListener;
-import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
-import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.tjmedicine.emergency.R;
 import com.tjmedicine.emergency.common.base.BaseActivity;
 import com.tjmedicine.emergency.common.bean.TeachingBean;
 import com.tjmedicine.emergency.model.widget.CustomWebView;
 import com.zzhoujay.richtext.RichText;
 import com.zzhoujay.richtext.callback.OnUrlClickListener;
+
 import butterknife.BindView;
+import xyz.doikki.videocontroller.StandardVideoController;
+import xyz.doikki.videocontroller.component.CompleteView;
+import xyz.doikki.videocontroller.component.ErrorView;
+import xyz.doikki.videocontroller.component.GestureView;
+import xyz.doikki.videocontroller.component.PrepareView;
+import xyz.doikki.videocontroller.component.TitleView;
+import xyz.doikki.videocontroller.component.VodControlView;
+import xyz.doikki.videoplayer.player.VideoView;
 
 public class TeachingDetailActivity extends BaseActivity {
 
 
     @BindView(R.id.detail_player)
-    StandardGSYVideoPlayer detailPlayer;
+    VideoView detailPlayer;
     @BindView(R.id.tv_title)
     TextView mTitle;
     @BindView(R.id.tv_content)
@@ -62,10 +65,6 @@ public class TeachingDetailActivity extends BaseActivity {
     TextView mCaption;
 
 
-    private boolean isPlay;
-    private boolean isPause;
-
-    private OrientationUtils orientationUtils;
     private TeachingBean.ListBean teachingBean;
 
     @Override
@@ -81,14 +80,10 @@ public class TeachingDetailActivity extends BaseActivity {
         mCaption.setText(teachingBean.getTitle());
         mTime.setText(teachingBean.getCreateAt());
 
-        Logger.d("tupian:" + teachingBean.getContent());
-
-
         if (!TextUtils.isEmpty(teachingBean.getPlayUrl())) {
             detailPlayer.setVisibility(View.VISIBLE);
             playVideo(teachingBean.getPlayUrl());
         }
-
 
         RichText.initCacheDir(this);
         RichText.debugMode = true;
@@ -104,82 +99,67 @@ public class TeachingDetailActivity extends BaseActivity {
                     }
                 })
                 .into(mContent);
-
         //       DownLoadUtil.setHtmlText(mContent,teachingBean.getContent(),200,200);
     }
 
-//--------------------------------------------------------------
-
-
-//--------------------------------------------------------------
-
-
-    private void playVideo(String url1) {
-        String url;
-        if (TextUtils.isEmpty(url1)) {
-            url = "http://7xjmzj.com1.z0.glb.clouddn.com/20171026175005_JObCxCE2.mp4";
-        } else {
-            url = url1;
-        }
+    private void playVideo(String playUrl) {
+        detailPlayer.setUrl(playUrl); //设置视频地址
+        StandardVideoController controller = new StandardVideoController(this);
+        controller.addDefaultControlComponent(teachingBean.getTitle(), false);
+        //根据屏幕方向自动进入/退出全屏
+        controller.setEnableOrientation(true);
+        PrepareView prepareView = new PrepareView(this);//准备播放界面
+        prepareView.setClickStart();
         //增加封面
         ImageView imageView = new ImageView(this);
-        loadCover(imageView, url);
-        //增加title
-        detailPlayer.getTitleTextView().setVisibility(View.GONE);
-        detailPlayer.getBackButton().setVisibility(View.GONE);
+        loadCover(imageView, playUrl);
+        controller.addControlComponent(prepareView);
 
-        //外部辅助的旋转，帮助全屏
-        orientationUtils = new OrientationUtils(this, detailPlayer);
-        //初始化不打开外部的旋转
-        orientationUtils.setEnable(false);
+        controller.addControlComponent(new CompleteView(this));//自动完成播放界面
 
-        GSYVideoOptionBuilder gsyVideoOption = new GSYVideoOptionBuilder();
+        controller.addControlComponent(new ErrorView(this));//错误界面
 
-        gsyVideoOption.setThumbImageView(imageView)
-                .setIsTouchWiget(true)
-                .setRotateViewAuto(false)
-                .setLockLand(false)
-                .setAutoFullWithSize(false)
-                .setShowFullAnimation(false)
-                .setNeedLockFull(true)
-                .setUrl(url)
-                .setCacheWithPlay(false)
-                .setVideoTitle(teachingBean.getTitle())
-                .setVideoAllCallBack(new GSYSampleCallBack() {
-                    @Override
-                    public void onPrepared(String url, Object... objects) {
-                        super.onPrepared(url, objects);
-                        //开始播放了才能旋转和全屏
-                        orientationUtils.setEnable(detailPlayer.isRotateWithSystem());
-                        isPlay = true;
-                    }
+        TitleView titleView = new TitleView(this);//标题栏
+        controller.addControlComponent(titleView);
+        VodControlView vodControlView = new VodControlView(this);//点播控制条
+        //是否显示底部进度条。默认显示
+//                vodControlView.showBottomProgress(false);
+        controller.addControlComponent(vodControlView);
 
-                    @Override
-                    public void onQuitFullscreen(String url, Object... objects) {
-                        super.onQuitFullscreen(url, objects);
-                        if (orientationUtils != null) {
-                            orientationUtils.backToProtVideo();
-                        }
-                    }
-                }).setLockClickListener(new LockClickListener() {
-            @Override
-            public void onClick(View view, boolean lock) {
-                if (orientationUtils != null) {
-                    //配合下方的onConfigurationChanged
-                    orientationUtils.setEnable(!lock);
-                }
-            }
-        }).build(detailPlayer);
+        GestureView gestureControlView = new GestureView(this);//滑动控制视图
+        controller.addControlComponent(gestureControlView);
+        //根据是否为直播决定是否需要滑动调节进度
+        controller.setCanChangePosition(true);
+        detailPlayer.setVideoController(controller); //设置控制器
+        //保存播放进度
+        detailPlayer.setProgressManager(new ProgressManagerImpl());
+    }
 
-        detailPlayer.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //直接横屏
-                orientationUtils.resolveByClick();
-                //第一个true是否需要隐藏actionbar，第二个true是否需要隐藏statusbar
-                detailPlayer.startWindowFullscreen(TeachingDetailActivity.this, true, true);
-            }
-        });
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        detailPlayer.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        detailPlayer.resume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        detailPlayer.release();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (!detailPlayer.onBackPressed()) {
+            super.onBackPressed();
+        }
     }
 
 
@@ -196,55 +176,5 @@ public class TeachingDetailActivity extends BaseActivity {
                 .load(url)
                 .into(imageView);
     }
-
-    @Override
-    public void onBackPressed() {
-        if (orientationUtils != null) {
-            orientationUtils.backToProtVideo();
-        }
-        if (GSYVideoManager.backFromWindowFull(this)) {
-            return;
-        }
-        super.onBackPressed();
-    }
-
-
-    @Override
-    protected void onPause() {
-        detailPlayer.getCurrentPlayer().onVideoPause();
-        super.onPause();
-        isPause = true;
-    }
-
-    @Override
-    protected void onResume() {
-        detailPlayer.getCurrentPlayer().onVideoResume(false);
-        super.onResume();
-        isPause = false;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (isPlay) {
-            detailPlayer.getCurrentPlayer().release();
-        }
-        if (orientationUtils != null)
-            orientationUtils.releaseListener();
-    }
-
-
-    /**
-     * orientationUtils 和  detailPlayer.onConfigurationChanged 方法是用于触发屏幕旋转的
-     */
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        //如果旋转了就全屏
-        if (isPlay && !isPause) {
-            detailPlayer.onConfigurationChanged(this, newConfig, orientationUtils, true, true);
-        }
-    }
-
 
 }

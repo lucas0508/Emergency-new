@@ -66,7 +66,7 @@ public class LoginModel extends BaseModel implements ILoginModel {
         Map<String, Object> mLoginFormData = new HashMap<>();
         mLoginFormData.put("unionId", "111111111111111");
         mLoginFormData.put("openId", "22222222333333333333333332");
-       // String data = SecurityUtil.encryptRSAPublic(mLoginFormData);
+//        String data = SecurityUtil.encryptRSAPublic(mLoginFormData);
 //        System.out.print("加密数据：" + data);
     }
 }

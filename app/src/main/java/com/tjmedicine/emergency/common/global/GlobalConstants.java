@@ -4,10 +4,9 @@ package com.tjmedicine.emergency.common.global;
 public class GlobalConstants {
 
 
-    public static final String BASE_SERVER_ = "https://www.mengyuanyiliao.com";
+    public static final String BASE_SERVER_ = "https://121.mengyuanyiliao.com";
 
-
-//  public static final String BASE_SERVER_ = "http://192.168.3.202:8081";
+//    public static final String BASE_SERVER_ = "http://192.168.1.108:8081";
 
 //  public static final String BASE_SERVER_ = "http://192.168.3.202:8081";
 
@@ -57,7 +56,7 @@ public class GlobalConstants {
     /**
      * 志愿者需知
      */
-    public static final String PRIVACYPOLICY_URL = BASE_SERVER_ + "/static/privacy.html";
+    public static final String PRIVACYPOLICY_URL = BASE_SERVER_ + "/static/agreement.html";
 
     /**
      * 问题反馈
@@ -208,6 +207,38 @@ public class GlobalConstants {
      * 发送服务器推送id
      */
     public static final String APP_PUSH_ID = BASE_SERVER_URL + "/user/addRid";
+
+
+    /**
+     * 我要学习
+     */
+    public static final String APP_USER_ME_STUDY = BASE_SERVER_URL + "/studyCourse/findList";
+
+    /**
+     * 学习进度
+     */
+    public static final String APP_USER_ME_STUDY_STUDYCOURSE = BASE_SERVER_URL + "/studyCourse/addStudyCourse";
+
+    /**
+     * 学习进度
+     */
+    public static final String APP_USER_ME_STUDY_LUNGAUSCULTA = BASE_SERVER_URL + "/user/addLungAusculta";
+
+
+    public static final String APP_USER_ME_STUDY_GETREMOTEECG = BASE_SERVER_URL + "/user/getRemoteEcg";
+
+
+  /**
+   * 上传心电记录仪 id
+   * 请求方式   post
+   * 参数  reportNo
+   */
+  public static final String APP_USER_GETREPORTNO = BASE_SERVER_URL + "/user/getReportNo?reportNo=";
+
+    /**
+     * 获取心电记录仪历史数据
+     */
+    public static final String APP_USER_GETREMOTEECG = BASE_SERVER_URL + "/user/getRemoteEcgData";
 
 
 }

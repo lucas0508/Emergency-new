@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@android:color/transparent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<!--  -->
+
+    <ImageView
+
+        android:id="@+id/triangle"
+        android:src="@drawable/black_vector_triangle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_below="@+id/triangle"
+        android:padding="6dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/shape_tip_popview_background"
+        android:textColor="@android:color/white"
+        android:text="心电测量指标是根据采集的心电图，测量各项心电指标得出的结果，测量指标结果和参考范围不一致并不一定代表心电图存在异常，如有身体不适，请到医院进行详细检查。"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

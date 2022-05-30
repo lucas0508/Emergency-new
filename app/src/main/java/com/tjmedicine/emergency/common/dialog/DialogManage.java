@@ -21,7 +21,6 @@ public class DialogManage {
     private LoadingDialog mLoadingDialog;
     private SelectPicDialog mSelectPicDialog;
     private ConfirmAgreementDialog confirmAgreementDialog;
-
     public DialogManage(Context context) {
         mContext = context;
     }
@@ -91,6 +90,8 @@ public class DialogManage {
      * @return
      */
     public ConfirmAgreementDialog getConfirmAgreementDialog() {
+
+
         if (confirmAgreementDialog == null)
             confirmAgreementDialog = new ConfirmAgreementDialog(mContext);
         return confirmAgreementDialog;

@@ -1,16 +1,12 @@
 package com.tjmedicine.emergency.ui.main;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.utils.widget.ImageFilterView;
@@ -18,12 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
-import com.orhanobut.logger.Logger;
-import com.squareup.picasso.Picasso;
 import com.tjmedicine.emergency.R;
 import com.tjmedicine.emergency.common.base.Adapter;
 import com.tjmedicine.emergency.common.base.BaseFragment;
@@ -31,21 +24,17 @@ import com.tjmedicine.emergency.common.base.OnMultiClickListener;
 import com.tjmedicine.emergency.common.base.ViewHolder;
 import com.tjmedicine.emergency.common.bean.BannerBean;
 import com.tjmedicine.emergency.common.bean.TeachingBean;
-import com.tjmedicine.emergency.common.global.Constants;
-import com.tjmedicine.emergency.common.global.GlobalConstants;
-import com.tjmedicine.emergency.model.widget.RecycleViewDivider;
-import com.tjmedicine.emergency.ui.bean.TeachData;
-import com.tjmedicine.emergency.ui.other.WebActivity;
+import com.tjmedicine.emergency.ui.login.view.activity.LoginActivity;
 import com.tjmedicine.emergency.ui.teach.presenter.BannerPresenter;
 import com.tjmedicine.emergency.ui.teach.presenter.TeachingPresenter;
 import com.tjmedicine.emergency.ui.teach.view.IBannerView;
 import com.tjmedicine.emergency.ui.teach.view.ITeachingView;
+import com.tjmedicine.emergency.ui.teach.view.MeExamActivity;
+import com.tjmedicine.emergency.ui.teach.view.MeStudyActivity;
 import com.tjmedicine.emergency.ui.teach.view.TeachingDetailActivity;
-import com.tjmedicine.emergency.ui.teach.view.test;
-import com.tjmedicine.emergency.ui.uart.UARTActivity;
+//import com.tjmedicine.emergency.ui.teach.view.TeachingDetailActivity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -66,6 +55,10 @@ public class TeachingFragment extends BaseFragment implements IBannerView, ITeac
     EasyRecyclerView mEasyRecyclerView;
     @BindView(R.id.banner)
     BGABanner bgaBanner;
+    @BindView(R.id.ll_me_exam)
+    LinearLayout ll_me_exam;
+    @BindView(R.id.ll_me_study)
+    LinearLayout ll_me_study;
     List<String> bannerList = new ArrayList<>();
     List<String> bannerListUrl = new ArrayList<>();
     List<String> bannerListType = new ArrayList<>();
@@ -79,10 +72,30 @@ public class TeachingFragment extends BaseFragment implements IBannerView, ITeac
         initRecyclerView();
         bannerPresenter.queryBannerData();
         teachingPresenter.findTeachingList(mAdapter.refreshPage());
+
+        ll_me_exam.setOnClickListener(new OnMultiClickListener() {
+            @Override
+            public void onMultiClick(View v) {
+                Bundle intent = new Bundle();
+                startActivity(MeExamActivity.class, intent);
+            }
+        });
+        ll_me_study.setOnClickListener(new OnMultiClickListener() {
+            @Override
+            public void onMultiClick(View v) {
+                Bundle intent = new Bundle();
+                if (mApp.isLogin()) {
+                    startActivity(MeStudyActivity.class, intent);
+                } else {
+                    startActivity(LoginActivity.class);
+                }
+
+            }
+        });
     }
 
     private void initBanner() {
-         }
+    }
 
     @Override
     protected int setLayoutResourceID() {
@@ -130,35 +143,30 @@ public class TeachingFragment extends BaseFragment implements IBannerView, ITeac
                 teachingPresenter.findTeachingList(mAdapter.refreshPage());
             }
         });
-//        mAdapter.setMore(new RecyclerArrayAdapter.OnMoreListener() {
-//            @Override
-//            public void onMoreShow() {
-//
-//                // TODO: 2021-03-30 修改下拉刷新   mAdapter.getNextPage()
-//
-//                teachingPresenter.findTeachingList(mAdapter.refreshPage());
-//            }
-//
-//            @Override
-//            public void onMoreClick() {
-//            }
-//        });
+        mAdapter.setMore(new RecyclerArrayAdapter.OnMoreListener() {
+            @Override
+            public void onMoreShow() {
+
+                // TODO: 2021-03-30 修改下拉刷新   mAdapter.getNextPage()
+
+                teachingPresenter.findTeachingList(mAdapter.getNextPage());
+            }
+
+            @Override
+            public void onMoreClick() {
+            }
+        });
 
 
         mAdapter.setOnItemClickListener(position -> {
             Bundle bundle = new Bundle();
             bundle.putSerializable("teachingBean", mAdapter.getItem(position));
             startActivity(TeachingDetailActivity.class, bundle);
-//          startActivity(test.class, bundle);
         });
     }
 
     @Override
     public void queryBannerSuccess(List<BannerBean> bannerBeanList) {
-
-
-
-
 
 
         bgaBanner.setAdapter(new BGABanner.Adapter<ImageView, String>() {

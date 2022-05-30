@@ -190,11 +190,39 @@
         <activity android:name=".ui.other.CompanyProfileActivity" />
         <activity android:name=".ui.other.AccessFeedbackActivity" />
         <activity android:name=".ui.other.AndroidOPermissionActivity" />
-        <activity android:name=".ui.teach.view.test" />
         <activity android:name=".ui.other.WebActivity" />
         <activity android:name=".ui.uart.SettingActivity" />
         <activity android:name=".ui.device.DeviceActivity" />
+        <activity android:name=".ui.transport.transportActivity" />
+        <activity android:name=".ui.device.steth.StethoscopeActivity" />
+        <activity android:name=".ui.teach.view.MeStudyActivity" />
+        <activity android:name=".ui.teach.view.MeExamActivity" />
+        <activity android:name=".ui.other.MnrHelpActivity"/>
+        <activity android:name=".ui.device.ecg.EcgMainActivity" />
+        <activity android:name=".ui.device.ecg.EcgActivity" />
+        <activity android:name=".ui.device.ecg.Ecg24Activity" />
+        <activity android:name="com.helowin.sdk.EcgListAct"/>
+        <activity android:name="a.DevAct"/>
+        <activity android:name="com.helowin.sdk.EcgDetailAct"/>
+        <activity android:name="com.helowin.sdk.EcgDetailActN"/>
+        <activity android:name="com.helowin.sdk.EcgDetailFailAct"/>
+        <activity android:name="com.helowin.sdk.EcgDetailFailActN"/>
 
+        <service android:name="no.nordicsemi.android.support.v18.scanner.ScannerService"/>
+        <activity
+            android:name=".ui.teach.view.MeStudyDetailActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.teach.view.ceshishis"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" /> <!-- or android:screenOrientation="landscape"-->
+
+        <activity
+            android:name=".WXEntryActivity"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.tjmedicine.emergency" />
         <activity
             android:name="com.amap.api.navi.AmapRouteActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|navigation"

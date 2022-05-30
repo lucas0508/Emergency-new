@@ -23,6 +23,7 @@
 package com.tjmedicine.emergency.ui.uart;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -31,6 +32,7 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -54,6 +56,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.google.gson.Gson;
 import com.lxj.xpopup.XPopup;
 import com.orhanobut.logger.Logger;
+import com.tjmedicine.emergency.EmergencyApplication;
 import com.tjmedicine.emergency.R;
 import com.tjmedicine.emergency.common.base.OnMultiClickListener;
 import com.tjmedicine.emergency.common.dialog.CustomDjsFullScreenPopup;
@@ -64,6 +67,7 @@ import com.tjmedicine.emergency.common.global.GlobalConstants;
 import com.tjmedicine.emergency.common.net.HttpProvider;
 import com.tjmedicine.emergency.model.widget.BGAProgressBar;
 import com.tjmedicine.emergency.model.widget.BatteryView;
+import com.tjmedicine.emergency.ui.main.MainActivity;
 import com.tjmedicine.emergency.ui.uart.data.presenter.IUARTControlView;
 import com.tjmedicine.emergency.ui.uart.data.presenter.PDScoreData;
 import com.tjmedicine.emergency.ui.uart.data.presenter.UARTControlPresenter;
@@ -76,10 +80,9 @@ import com.tjmedicine.emergency.utils.SoundPlayUtils;
 import com.tjmedicine.emergency.utils.ToastUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
 public class UARTControlScoreFragment extends Fragment implements UARTActivity.ConfigurationListener, IUARTControlView {
@@ -89,14 +92,14 @@ public class UARTControlScoreFragment extends Fragment implements UARTActivity.C
     private UARTInterface uartInterface;
     private boolean editMode;
     private MyReceiver myReceiver;
-    TextView tv_connect, mTime, mHistoricalData, tv_Battery, tv_bga_pdcount, tv_bga_blow;
+    TextView tv_connect, mTime, mHistoricalData, tv_Battery, tv_bga_pdcount, tv_bga_blow, tv_bga_count;
     BatteryView batteryview;
     Button mStartRobot;
-    ImageView iv_setting,mmr;
+    ImageView iv_setting, mmr;
     List<String> liscount;
     List<String> lisdata;
     private Handler handler;
-    private ImageButton ib_close;
+    private ImageButton ib_closeceshi;
     DialogManage mApp;
     private UARTService.UARTBinder bleService;
     private UARTControlPresenter uartControlPresenter = new UARTControlPresenter(this);
@@ -113,6 +116,12 @@ public class UARTControlScoreFragment extends Fragment implements UARTActivity.C
     private int g = 0;//吹去次数
     private int j = 0;//按压次数
     List<String> listPD_trough = new ArrayList<>();
+    private CountDownTimer timer;
+
+    private ProgressDialog dialog;
+    private UpdateFW.DataCallback dataCallback;
+    private UpdateFW updateFW;
+    private String strFWVersion, strHWVersion;
 
     @Override
     public void onAttach(@NonNull final Context context) {
@@ -152,6 +161,7 @@ public class UARTControlScoreFragment extends Fragment implements UARTActivity.C
         @Override
         public void onServiceConnected(final ComponentName name, final IBinder service) {
             bleService = (UARTService.UARTBinder) service;
+
             uartInterface = bleService;
             tv_connect.setText("关闭连接");
         }
@@ -175,9 +185,10 @@ public class UARTControlScoreFragment extends Fragment implements UARTActivity.C
         final View view = inflater.inflate(R.layout.fragment_feature_uart_control_score, container, false);
         requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         tv_connect = view.findViewById(R.id.action_connect);
-        ib_close = view.findViewById(R.id.ib_close);
+        ib_closeceshi = view.findViewById(R.id.ib_closeceshi);
         mStartRobot = view.findViewById(R.id.start_robot);
         mTime = view.findViewById(R.id.tv_time);
+        tv_bga_count = view.findViewById(R.id.tv_bga_count);
         mHistoricalData = view.findViewById(R.id.tv_historical_data);
         batteryview = view.findViewById(R.id.batteryview);
         tv_Battery = view.findViewById(R.id.tv_Battery);
@@ -213,6 +224,35 @@ public class UARTControlScoreFragment extends Fragment implements UARTActivity.C
             @Override
             public void onMultiClick(View v) {
                 startUART();
+            }
+        });
+
+        ib_closeceshi.setOnClickListener(new OnMultiClickListener() {
+            @Override
+            public void onMultiClick(View v) {
+                if (uartInterface != null) {
+                    HttpProvider.doGet(GlobalConstants.APP_BURIED_POINT + Constants.B_BLE_END + "," + bleService.getDeviceAddress(), null);
+                    uartInterface.send("<TestStop>");
+                    uartInterface = null;
+                }
+                ((UARTActivity) requireActivity()).setConfigurationListener(null);
+                if (myReceiver != null) {
+                    requireActivity().unregisterReceiver(myReceiver);
+                    myReceiver=null;
+                }
+                if (timer != null) {
+                    timer.cancel();
+                    timer.onFinish();
+                    timer = null;
+                }
+
+                if (bleService != null) {
+                    try {
+                        bleService.disconnect();
+                    } catch (Exception e) {
+                    }
+                }
+                requireActivity().finish();
             }
         });
     }
@@ -252,21 +292,22 @@ public class UARTControlScoreFragment extends Fragment implements UARTActivity.C
         }
     }
 
+
     /**
      * 开始倒计时
      */
     private void startTimer() {
         long totalTime = 60000;
-//        long totalTime = 20000;
+//        long totalTime = 30000;
         // 初始化并启动倒计时
-        new SimpleCountDownTimer(totalTime, mTime).setOnFinishListener(new SimpleCountDownTimer.OnFinishListener() {
+        timer = new SimpleCountDownTimer(totalTime, mTime).setOnFinishListener(new SimpleCountDownTimer.OnFinishListener() {
             @Override
             public void onFinish() {
                 if (null != uartInterface) {
                     uartInterface.send("<TestStop>");
                     for (int i = 1; i < listPD1.size() - 1; i++) {
-                        if (listPD1.get(i).getP_num() == -1) {
-                            serverDataList.add("Blow" + "|" + listPD1.get(i).getP_time());
+                        if (listPD1.get(i).getP_name() == -1) {
+                            serverDataList.add("Blow" + "|" + listPD1.get(i).getP_num() + "|" + listPD1.get(i).getP_time());
                         } else {
                             if (listPD1.get(i).getP_num() > listPD1.get(i - 1).getP_num() && listPD1.get(i).getP_num() >= listPD1.get(i + 1).getP_num()) {
                                 if (listPD1.get(i).getP_num() > 10) {
@@ -275,7 +316,6 @@ public class UARTControlScoreFragment extends Fragment implements UARTActivity.C
                                     Log.e(TAG, " --最后总次数---maxj-time---> " + new Gson().toJson(listPD1.get(i)));
                                     serverDataList.add(listPD1.get(i).getP_num() + "|" + listPD1.get(i).getP_time());
                                 }
-
                             }
                             //n-1 =n  n< n+1				n-1<n  n<n+1		  n-1  >n   n=n+1
                             if (listPD1.get(i).getP_num() <= listPD1.get(i - 1).getP_num() && listPD1.get(i).getP_num() < listPD1.get(i + 1).getP_num()) {
@@ -289,12 +329,12 @@ public class UARTControlScoreFragment extends Fragment implements UARTActivity.C
                     //清除数据
                     //断开模拟人
                     // TODO: 2020-12-23 弹出评分
-
                     Log.e(TAG, " --传递服务器数据-------> " + new Gson().toJson(serverDataList));
                     uartControlPresenter.postUARTData(serverDataList, "1", listPD_trough);
                 }
             }
-        }).start();
+        });
+        timer.start();
     }
 
     /**
@@ -334,6 +374,97 @@ public class UARTControlScoreFragment extends Fragment implements UARTActivity.C
         }
     }
 
+
+    private void isUpdataFW() {
+
+        new Thread() {
+            @Override
+            public void run() {
+                Log.e(TAG, "Update FW Start!");
+
+//                String strRsp = null;
+//
+//                strRsp = updateFW.sendChecksumCommand("NewVer=" + versionInVersionFile);
+//                if (strRsp == null)
+//                    return false;
+//                if (!strRsp.equals("<OK>"))
+//                    return false;
+
+
+//                updateFW = new UpdateFW(SettingActivity.this, strFWVersion,strHWVersion, uartInterface, progress -> runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        dialog.setProgress(progress);
+//                    }
+//                }));
+
+                dataCallback = new UpdateFW.DataCallback() {
+                    @Override
+                    public void setDataProgress(int progress) {
+
+                        dialog.setProgress(progress);
+                    }
+                };
+
+                updateFW = new UpdateFW(getActivity(), strFWVersion, strHWVersion, uartInterface, dataCallback);
+
+                String s = updateFW.updateRes();
+                if (!TextUtils.isEmpty(s)) {
+
+                    return;
+                }
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog = new ProgressDialog(getActivity());
+                        dialog.setTitle("下载提示");
+                        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                        dialog.setMessage("Update FW Start!");
+                        dialog.setCancelable(false);
+                        dialog.setCanceledOnTouchOutside(false);
+                        dialog.show();
+
+                    }
+                });
+
+
+                if (updateFW.isUpdateFW()) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            dialog.dismiss();
+                            ToastUtils.showTextToas(getActivity(), "FW Update Success!");
+                            new SweetAlertDialog(getActivity(), SweetAlertDialog.SUCCESS_TYPE)
+                                    .setTitleText("版本升级成功")
+                                    .setContentText("FW Update Success!请重新开启模拟人并连接手机")
+                                    .setConfirmText("确认")
+                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sDialog) {
+                                            sDialog.dismissWithAnimation();
+                                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                                            startActivity(intent);
+                                            getActivity().finish();
+                                        }
+                                    }).show();
+                        }
+                    });
+                    Log.e(TAG, "FW Update Success!");
+                } else {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+//                            dialog.setMessage("FW Update Failed!");
+                            ToastUtils.showTextToas(getActivity(), "FW Update Failed!");
+                            dialog.dismiss();
+                        }
+                    });
+                    Log.e(TAG, "FW Update Failed!");
+                }
+            }
+        }.start();
+    }
 
     private void initChart() {
         LineData lineData = new LineData();// //线的总管理
@@ -477,26 +608,35 @@ public class UARTControlScoreFragment extends Fragment implements UARTActivity.C
                     String[] split = s.split("=");
                     tv_Battery.setText("当前电量:" + "\n\n" + split[1] + "%");
                     batteryview.setPower(Integer.parseInt(split[1]));
-                } else if (s.equals("Blow")) {
+                } else if (s.startsWith("Blow=")) {
                     g++;
+                    String[] split = s.split("=");
                     Log.e(TAG, "onReceive: 吹气：---->" + s);
                     //实时统计吹气次数
 
                     bga_blow_progress.setProgress(g);
                     tv_bga_blow.setText("人工呼吸" + g + "次");
+                    //实时统计吹气量
+                    tv_bga_count.setText("吹气量" + split[1] + "ml");
                     mmrAnim();
-                    listPD1.add(new PDData(-1, System.currentTimeMillis()));
-                } else if (s.contains("FWVer") || s.contains("HWVer")) {
-                    return;
+                    listPD1.add(new PDData(-1, Integer.parseInt(split[1]), System.currentTimeMillis()));
+                } else if (s.contains("FWVer")) {
+                    String[] split = s.split("=");
+                    strFWVersion = split[1];
+                    isUpdataFW();
+                } else if (s.contains("HWVer")) {
+                    String[] split = s.split("=");
+                    strHWVersion = split[1];
                 } else {
-                    Log.e(TAG, "onReceive: 显示所有点：---->" + s);
-                    String[] split = s.split(",");
-                    for (int i = 0; i < split.length; i++) {
-                        dynamicLineChartManager1.addEntry(Integer.parseInt(split[i]));
-//                        listPD.add(Integer.parseInt(split[i]));
-                        listPD.add(Integer.parseInt(split[i]) + "|" + System.currentTimeMillis());
-                        PDData pdData = new PDData(Integer.parseInt(split[i]), System.currentTimeMillis());
-                        listPD1.add(pdData);
+                    if (!s.contains("Blow=")) {
+                        Log.e(TAG, "onReceive: 显示所有点：---->" + s);
+                        String[] split = s.split(",");
+                        for (int i = 0; i < split.length; i++) {
+                            dynamicLineChartManager1.addEntry(Integer.parseInt(split[i]));
+                            listPD.add(Integer.parseInt(split[i]) + "|" + System.currentTimeMillis());
+                            PDData pdData = new PDData(1, Integer.parseInt(split[i]), System.currentTimeMillis());
+                            listPD1.add(pdData);
+                        }
                     }
                 }
                 //按压次数
@@ -504,23 +644,25 @@ public class UARTControlScoreFragment extends Fragment implements UARTActivity.C
                 if (listPD1.size() > 0) {
                     Log.e(TAG, " --实际总次数-----listPD1--> " + listPD1.size());
                     for (int i = 1; i < listPD1.size() - 1; i++) {
-                        if (listPD1.get(i).getP_num() > listPD1.get(i - 1).getP_num() && listPD1.get(i).getP_num() >= listPD1.get(i + 1).getP_num()) {
-                            if (listPD1.get(i).getP_num() > 10) {
-                                j++;
-                                //实时统计按压次数
-//                                bga_pdcount_progress.setProgress(j);
+                        if (listPD1.get(i).getP_name() == 1) {
+                            if (listPD1.get(i).getP_num() > listPD1.get(i - 1).getP_num() && listPD1.get(i).getP_num() >= listPD1.get(i + 1).getP_num()) {
+                                if (listPD1.get(i).getP_num() > 10) {
+                                    j++;
+                                    //实时统计按压次数
+
+                                    bga_pdcount_progress.setProgress(j);
+                                    tv_bga_pdcount.setText("按压次数" + j + "次");
+                                    Log.e(TAG, " 实际总次数--maxj-------> " + j);
+                                    Log.e(TAG, " --实际总次数---maxj-time---> " + new Gson().toJson(listPD1.get(i)));
+                                    //serverDataList.add(listPD1.get(i).getP_num()+"|"+listPD1.get(i).getP_time());
+                                }
                                 Log.e(TAG, " 实际总次数--maxj-------> " + j);
-                                Log.e(TAG, " --实际总次数---maxj-time---> " + new Gson().toJson(listPD1.get(i)));
-                                //serverDataList.add(listPD1.get(i).getP_num()+"|"+listPD1.get(i).getP_time());
                             }
-
-
-                            Log.e(TAG, " 实际总次数--maxj-------> " + j);
-                        }
-                        //n-1 =n  n< n+1				n-1<n  n<n+1		  n-1  >n   n=n+1
-                        if (listPD1.get(i).getP_num() <= listPD1.get(i - 1).getP_num() && listPD1.get(i).getP_num() < listPD1.get(i + 1).getP_num()) {
-                            Log.e(TAG, " --min-------> " + new Gson().toJson(listPD1.get(i)));
-                            listPD_trough.add(listPD1.get(i).getP_num() + "");
+                            //n-1 =n  n< n+1				n-1<n  n<n+1		  n-1  >n   n=n+1
+                            if (listPD1.get(i).getP_num() <= listPD1.get(i - 1).getP_num() && listPD1.get(i).getP_num() < listPD1.get(i + 1).getP_num()) {
+                                Log.e(TAG, " --min-------> " + new Gson().toJson(listPD1.get(i)));
+                                listPD_trough.add(listPD1.get(i).getP_num() + "");
+                            }
                         }
                     }
                     //serverDataList.add(s+"|"+System.currentTimeMillis()); 发送完整数据+时间戳
@@ -558,33 +700,51 @@ public class UARTControlScoreFragment extends Fragment implements UARTActivity.C
             // do nothing, we were not connected to the sensor
         }
     }
+
     /**
      * 呼气  模拟人缩放动画
      */
     private void mmrAnim() {
-        mmr.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.mmr_scale));
-    }
+        try {
+            mmr.startAnimation(AnimationUtils.loadAnimation(EmergencyApplication.getContext(), R.anim.mmr_scale));
+        }catch (Exception e){
 
+        }
+    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ((UARTActivity) requireActivity()).setConfigurationListener(null);
-        if (myReceiver != null) {
-            requireActivity().unregisterReceiver(myReceiver);
-        }
         if (uartInterface != null) {
             HttpProvider.doGet(GlobalConstants.APP_BURIED_POINT + Constants.B_BLE_END + "," + bleService.getDeviceAddress(), null);
             uartInterface.send("<TestStop>");
             uartInterface = null;
         }
+        ((UARTActivity) requireActivity()).setConfigurationListener(null);
+        if (myReceiver != null) {
+            requireActivity().unregisterReceiver(myReceiver);
+            myReceiver=null;
+        }
+        if (timer != null) {
+            timer.cancel();
+            timer.onFinish();
+            timer = null;
+        }
+
         if (bleService != null) {
             try {
                 bleService.disconnect();
             } catch (Exception e) {
-
             }
         }
         requireActivity().finish();
     }
 }
+
+
+
+
+
+
+
+

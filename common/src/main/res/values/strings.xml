@@ -34,11 +34,11 @@
 	<string name="not_available">n/a</string>
 
 
-	<string name="scanner_title">请选择模拟人:</string>
-	<string name="scanner_empty">没有找到模拟人</string>
+	<string name="scanner_title">请选择设备:</string>
+	<string name="scanner_empty">没有设备</string>
 	<string name="scanner_action_scan">重新扫描</string>
 	<string name="scanner_action_cancel">取消</string>
-	<string name="scanner_subtitle_bonded">绑定模拟人:</string>
+	<string name="scanner_subtitle_bonded">绑定设备:</string>
 	<string name="scanner_subtitle_not_bonded">可用设备:</string>
 	<string name="scanner_permission_rationale">由于Android 6.0 系统需要授予对设备位置的访问权限才能扫描蓝牙设备。蓝牙信标可用于确定电话和用户的位置。</string>
 

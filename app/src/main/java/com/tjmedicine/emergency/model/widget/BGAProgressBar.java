@@ -8,9 +8,11 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.widget.ProgressBar;
 
+import com.orhanobut.logger.Logger;
 import com.tjmedicine.emergency.R;
 
 /**
@@ -271,7 +273,8 @@ public class BGAProgressBar extends ProgressBar {
 //        mText = String.format("%d", (int) (getProgress() * 1.0f / getMax() * 100)) ;
         mPaint.setTextSize(mTextSize);
         mPaint.setStyle(Paint.Style.FILL);
-
+        Log.e(TAG, "----------------: "+ String.format("%d", getProgress()));
+        Log.e(TAG, "---------------------------: "+ String.format("%d", (int) (getProgress() * 1.0f / getMax() * 100)));
         mPaint.getTextBounds(mText, 0, mText.length(), mTextRect);
         mTextWidth = mTextRect.width();
         mTextHeight = mTextRect.height();

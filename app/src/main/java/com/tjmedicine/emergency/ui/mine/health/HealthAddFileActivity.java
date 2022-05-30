@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
+import com.orhanobut.logger.Logger;
 import com.tjmedicine.emergency.R;
 import com.tjmedicine.emergency.common.base.BaseActivity;
 import com.tjmedicine.emergency.common.base.OnMultiClickListener;
@@ -195,6 +196,7 @@ public class HealthAddFileActivity extends BaseActivity implements IHealthView {
         stringObjectMap.put("idNum", et_idNum.getText().toString().trim());
         stringObjectMap.put("list", checkTYpeNameSet);
 
+        Logger.d(stringObjectMap);
         mApp.getLoadingDialog().show();
         healthPresenter.addHealthRecords(stringObjectMap);
 

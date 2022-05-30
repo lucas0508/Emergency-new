@@ -12,8 +12,11 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
@@ -85,6 +88,8 @@ public class ConfirmAgreementDialog extends Dialog {
         mDialog.setCanceledOnTouchOutside(false);
         mDialog.setCancelable(false);
         Window w = mDialog.getWindow();
+        assert w != null;
+
         w.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
@@ -149,6 +154,18 @@ public class ConfirmAgreementDialog extends Dialog {
 
     private void showDialog() {
         mDialog.show();
+        //针对个别手机dialog不居中
+        //放在show()之后，不然有些属性是没有效果的，比如height和width
+        Window dialogWindow = mDialog.getWindow();
+        WindowManager m = getWindow().getWindowManager();
+        Display d = m.getDefaultDisplay(); // 获取屏幕宽、高
+        WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+        // 设置宽度
+        p.width = (int) (d.getWidth() * 0.95); // 宽度设置为屏幕的0.95
+        p.gravity = Gravity.CENTER;//设置位置
+        //p.alpha = 0.8f;//设置透明度
+        dialogWindow.setAttributes(p);
+
         mView.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.alpha_in));
         mDialogContent.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.scale_in));
     }

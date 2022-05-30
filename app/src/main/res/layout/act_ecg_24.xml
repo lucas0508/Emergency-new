@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f1f1f1"
+    android:paddingTop="1dp">
+    <include
+
+        layout="@layout/layout_clm_b_sleep"
+        android:visibility="gone" />
+
+    <include layout="@layout/layout_ecg_b_his"
+
+        android:visibility="gone"
+        />
+    <include layout="@layout/layout_ecg_b_status_sub"
+        />
+    <include layout="@layout/layout_doit_data"
+        android:visibility="gone"
+        />
+
+    <include
+        layout="@layout/layout_sys_stop"
+        android:visibility="gone" />
+</FrameLayout>

@@ -11,7 +11,6 @@ import android.view.WindowManager;
 
 import com.mob.MobSDK;
 import com.mob.OperationCallback;
-import com.mob.PrivacyPolicy;
 import com.orhanobut.logger.Logger;
 import com.tjmedicine.emergency.R;
 import com.tjmedicine.emergency.common.base.ActivityManager;
@@ -56,7 +55,9 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void ActivityJump() {
+
         if (isFirst) {
+//            mApp.getConfirmAgreementDialog().show();
             mApp.getConfirmAgreementDialog().show("服务协议和隐私政策", new ConfirmAgreementDialog.ConfirmCallback() {
                 @Override
                 public void onOk() {

@@ -23,11 +23,10 @@ import java.net.URL;
 import static com.tjmedicine.emergency.ui.uart.UARTService.EXTRA_DATA;
 
 
-
 public class UpdateFW {
 
 
-    private String TAG ="UpdateFW.CLASS";
+    private String TAG = "UpdateFW.CLASS";
 
     private String hwInVersionFile = null;
     private String versionInVersionFile = null;
@@ -37,33 +36,65 @@ public class UpdateFW {
     private byte[] arrayAIDBin = null;
     private int lenSeg = 90;
     Context context;
-    String strFWVersion;
+    String strFWVersion, strHWVersion;
     UARTInterface uartInterface;
 
-    public interface DataCallback{
+    public interface DataCallback {
         void setDataProgress(int progress);
     }
 
     public DataCallback dataCallback;//接口
 
 
-    public UpdateFW(Context context,String strFWVersion,UARTInterface uartInterface,DataCallback dataCallback) {
-        this.context=context;
-        this.strFWVersion=strFWVersion;
-        this.uartInterface=uartInterface;
-        this.dataCallback= dataCallback;
+
+
+    public UpdateFW(Context context, String strFWVersion, String strHWVersion, UARTInterface uartInterface, DataCallback dataCallback) {
+        this.context = context;
+        this.strFWVersion = strFWVersion;
+        this.strHWVersion = strHWVersion;
+//        this.strHWVersion = "AIDv2.0";
+        this.uartInterface = uartInterface;
+        this.dataCallback = dataCallback;
 
         BTBroadcastReceiver receiver = new BTBroadcastReceiver();
         IntentFilter intentFilter1 = new IntentFilter();
         intentFilter1.addAction("no.nordicsemi.android.nrftoolbox.uart.BROADCAST_UART_RX");
         LocalBroadcastManager.getInstance(context).registerReceiver(receiver, intentFilter1);
-
     }
 
-    public  boolean isUpdateFW() {
-
+    public String updateRes(){
 
         String strAIDVersionFile = getAIDVersionFileString();
+
+        if (strAIDVersionFile == null) {
+            Log.e(TAG, " --->" + "Get AIDVersion File Failed!");
+            return "Get AIDVersion File Failed!";
+        } else {
+            Log.e(TAG, " --->" + "AIDVersion=" + strAIDVersionFile);
+        }
+
+        if (strFWVersion == null) {
+            Log.e(TAG, " --->" + "Get FW Version Failed!");
+            return "Get FW Version Failed!";
+        } else {
+            Log.e(TAG, " --->" + "FW Version=" + strFWVersion);
+        }
+        if (strFWVersion.indexOf(versionInVersionFile) >= 0) {
+            Log.e(TAG, " --->" + "No New Version Update!");
+
+            return "No New Version Update!";
+        }
+
+        if (!getAIDBinFile()) {
+            Log.e(TAG, " --->" + "Download Bin Faild!");
+            return "Download Bin Faild!";
+        }
+        return "";
+    }
+
+    public boolean isUpdateFW() {
+        String strAIDVersionFile = getAIDVersionFileString();
+
         if (strAIDVersionFile == null) {
             Log.e(TAG, " --->" + "Get AIDVersion File Failed!");
             return false;
@@ -77,12 +108,12 @@ public class UpdateFW {
         } else {
             Log.e(TAG, " --->" + "FW Version=" + strFWVersion);
         }
-        if (strFWVersion.indexOf(versionInVersionFile) > 0) {
+        if (strFWVersion.indexOf(versionInVersionFile) >0) {
             Log.e(TAG, " --->" + "No New Version Update!");
             return true;
         }
 
-        if (getAIDBinFile() == false) {
+        if (!getAIDBinFile()) {
             Log.e(TAG, " --->" + "Download Bin Faild!");
             return false;
         }
@@ -93,7 +124,6 @@ public class UpdateFW {
     private boolean sendUpdateInfo() {
 
         String strRsp = null;
-
         strRsp = sendChecksumCommand("NewVer=" + versionInVersionFile);
         if (strRsp == null)
             return false;
@@ -108,6 +138,8 @@ public class UpdateFW {
 
         strRsp = sendChecksumCommand("MD5A=" + md5InVersionFile.substring(0, 8));
         if (strRsp == null)
+
+
             return false;
         if (!strRsp.equals("<OK>"))
             return false;
@@ -156,8 +188,11 @@ public class UpdateFW {
 
     private String getAIDVersionFileString() {
         String strVersionFile = null;
-
+//        String urlStr = "http://mu2020.xyz/aid/" + strHWVersion + ".txt";
         String urlStr = "http://mu2020.xyz/aid/version.txt";
+
+//        String urlStr = "http://mu2020.xyz/aid/" + strHWVersion + "_Debug.txt";
+//        String urlStr = "http://mu2020.xyz/aid/AIDv2.0_Debug.txt";
         try {
             URL url = new URL(urlStr);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -235,7 +270,7 @@ public class UpdateFW {
         }
     }
 
-    private String sendChecksumCommand(String cmd) {
+    public String sendChecksumCommand(String cmd) {
         String strRsp = null;
         String checksumCmd = "<" + cmd + "|" + getChecksum(cmd) + ">";
         resetStringBTBroadcastReceiver();

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <include layout="@layout/layout_ecg_b_fast_displayer"
+        android:id="@+id/layout_ecg_b_fast_displayer"/>
+
+    <include
+        android:id="@+id/layout_ecg_b_status_sub"
+        layout="@layout/layout_ecg_b_status_sub" />
+    <include layout="@layout/layout_doit_data"
+        android:id="@+id/layout_doit_data"/>
+    <include layout="@layout/layout_ecg_b_his"
+        android:id="@+id/layout_ecg_b_his"
+        android:visibility="gone"/>
+
+
+
+
+</RelativeLayout>

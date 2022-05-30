@@ -36,7 +36,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="欢迎来到121急救平台"
+                        android:text="欢迎来到121急救"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -129,6 +131,7 @@
                         android:drawablePadding="4dp"
                         android:gravity="center"
                         android:text="实名认证 "
+                        android:textColor="#000"
                         android:textSize="14sp" />
 
                     <View
@@ -147,6 +150,7 @@
                         android:drawableTop="@mipmap/me_icon_volunteers"
                         android:drawablePadding="4dp"
                         android:gravity="center"
+                        android:textColor="#000"
                         android:text="成为志愿者"
                         android:textSize="14sp" />
 
@@ -166,6 +170,7 @@
                         android:drawableTop="@mipmap/me_icon_contact"
                         android:drawablePadding="4dp"
                         android:gravity="center"
+                        android:textColor="#000"
                         android:text="紧急联系人"
                         android:textSize="14sp" />
 
@@ -227,6 +232,49 @@
                     android:layout_marginRight="10dp"
                     android:background="#ffe4e2e2" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/ll_my_health_mall"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:drawableLeft="@mipmap/icon_sign_up"
+                        android:drawablePadding="6dp"
+                        android:gravity="center_vertical"
+                        android:text="健康商城"
+                        android:textColor="#ff333333"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="10dp"
+                        android:src="@mipmap/me_right" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="#ffe4e2e2" />
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -380,6 +428,8 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="20dp"
                 android:background="#ffe4e2e2" />
+
+
 
         </LinearLayout>
 

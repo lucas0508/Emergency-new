@@ -19,12 +19,12 @@
   ~ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
   ~ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   -->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <!-- The size of text below must be fixed, therefore dp are used instead of sp -->
 
@@ -38,7 +38,7 @@
         android:visibility="visible">
 
         <ImageButton
-            android:id="@+id/ib_close"
+            android:id="@+id/ib_closelianxi"
             android:layout_width="55dp"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
@@ -69,6 +69,7 @@
             android:paddingEnd="10dp"
             android:text="点击连接模拟人"
             android:visibility="gone" />
+
 
         <ImageView
             android:id="@+id/iv_setting"
@@ -125,13 +126,26 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp" />
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+            </RelativeLayout>
+
+        </ScrollView>
+
 
     </RelativeLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="120dp"
         android:layout_below="@+id/rel_chart"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
@@ -161,6 +175,7 @@
                 app:bga_pb_textColor="#FFC73B"
                 app:bga_pb_textMargin="8dp"
                 app:bga_pb_textSize="14sp"
+                android:max="200"
                 app:bga_pb_unReachedColor="#F5F5F5"
                 app:bga_pb_unReachedHeight="2dp" />
 
@@ -190,6 +205,7 @@
                 app:bga_pb_isCapRounded="false"
                 app:bga_pb_isHiddenText="false"
                 app:bga_pb_mode="circle"
+                android:max="200"
                 app:bga_pb_radius="24dp"
                 app:bga_pb_reachedColor="#6AABDE"
                 app:bga_pb_reachedHeight="6dp"
@@ -199,13 +215,23 @@
                 app:bga_pb_unReachedHeight="3dp" />
 
             <TextView
+                android:id="@+id/tv_bga_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="吹气量"
+                android:textColor="#ffc0c5cc"
+                android:textSize="12sp" />
+
+            <TextView
                 android:id="@+id/tv_bga_blow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="2dp"
                 android:text="人工呼吸(次)"
                 android:textColor="#ffc0c5cc"
                 android:textSize="14sp" />
+
         </LinearLayout>
 
     </LinearLayout>
@@ -213,7 +239,7 @@
     <LinearLayout
         android:id="@+id/ll_mnr"
         android:layout_width="124dp"
-        android:layout_height="100dp"
+        android:layout_height="120dp"
         android:layout_below="@+id/rel_chart"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="10dp"
@@ -232,7 +258,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:src="@mipmap/mnr" />
+            android:src="@mipmap/mmr" />
 
         <TextView
             android:id="@+id/tv_Battery"
@@ -257,12 +283,12 @@
 
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_mnr"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -286,17 +312,16 @@
 
     </LinearLayout>
 
-
     <TextView
-        android:layout_marginTop="15dp"
         android:id="@+id/tv1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll"
-        android:textSize="14sp"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
         android:text="温馨提示:"
-        android:textColor="@color/red" />
+        android:textColor="@color/red"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv2"
@@ -309,6 +334,7 @@
         android:textSize="12sp" />
 
     <TextView
+        android:id="@+id/tv3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv2"
@@ -316,6 +342,38 @@
         android:layout_marginTop="4dp"
         android:text="2、每按压30次后，给予2次人工呼吸"
         android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv3"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:text="使用说明:"
+        android:textColor="@color/red"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv4"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="4dp"
+        android:text="1、了解更多模拟人的使用信息"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_marginTop="4dp"
+        android:id="@+id/button_big"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv4"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:text="查看  >"
+        android:textColor="#415CE3" />
 
 
     <LinearLayout
@@ -361,5 +419,6 @@
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_alignParentBottom="true" />
+
 
 </RelativeLayout>

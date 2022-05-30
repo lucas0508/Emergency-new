@@ -89,8 +89,8 @@ public class HttpsUtils {
      *
      * @return 支持自签名的客户端
      */
-    public OkHttpClient getTrusClient() {    //R.raw.certificate
-        InputStream certificate = EmergencyApplication.getContext().getResources().openRawResource(R.raw.mengyuanyiliao);
+    public OkHttpClient getTrusClient() {    //R.raw.mengyuanyiliao
+        InputStream certificate = EmergencyApplication.getContext().getResources().openRawResource(R.raw.mengyuanyiliao_com_121);
         X509TrustManager trustManager;
         SSLSocketFactory sslSocketFactory;
         try {

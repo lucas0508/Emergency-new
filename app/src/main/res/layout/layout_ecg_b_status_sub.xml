@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eeeeee"
+    android:orientation="vertical" >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:elevation="4dp"
+        android:gravity="center_vertical">
+
+
+        <ImageView
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:onClick="back"
+            android:padding="20dp"
+            android:scaleType="center"
+            android:src="@mipmap/icon_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="测量准备"
+            android:textColor="#333333"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:background="@android:color/white"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/big_show"
+                android:layout_width="240dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:src="@mipmap/pic_use_ecg" />
+
+            <LinearLayout
+                android:layout_width="272dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:orientation="vertical" >
+
+              <com.helowin.ecg.sdk.widget.XListView
+                  android:id="@+id/link_list"
+                  android:divider="@android:color/transparent"
+                  android:dividerHeight="0dp"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+<View
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"/>
+            <FrameLayout
+                android:id="@+id/clm"
+                android:layout_width="105dp"
+                android:layout_height="105dp"
+                android:onClick="clm"
+                android:layout_gravity="center" >
+
+                <com.helowin.ecg.sdk.widget.AnimImageView
+                    android:id="@+id/aiv"
+                    android:layout_width="105dp"
+                    android:layout_height="105dp" />
+
+                <TextView
+                    android:id="@+id/text"
+                    android:layout_gravity="center"
+                    android:textSize="32sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+            </FrameLayout>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+</LinearLayout>

@@ -62,6 +62,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.lxj.xpopup.XPopup;
+import com.orhanobut.logger.Logger;
 import com.tjmedicine.emergency.EmergencyApplication;
 import com.tjmedicine.emergency.R;
 import com.tjmedicine.emergency.common.base.OnMultiClickListener;
@@ -74,6 +75,7 @@ import com.tjmedicine.emergency.ui.uart.profile.UARTInterface;
 import com.tjmedicine.emergency.utils.ToastUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -112,6 +114,11 @@ public class ScannerFragment extends DialogFragment {
     AlertDialog dialog = null;
     CustomFullScreenPopup customFullScreenPopup;
     CustomLoadingFullScreenPopup customLoadingFullScreenPopup;
+
+    // 0.9秒内防止多次点击
+    public static final int MIN_CLICK_DELAY_TIME = 1000;
+    private long lastClickTime = 0;
+
 
     private static IntentFilter makeIntentFilter() {
         final IntentFilter intentFilter = new IntentFilter();
@@ -238,19 +245,21 @@ public class ScannerFragment extends DialogFragment {
         // title.setText(R.string.scanner_title);
         dialog = builder.setView(dialogView).create();
         listview.setOnItemClickListener((parent, view, position, id) -> {
-
-
-            listview.post(new Runnable() {
-                @Override
-                public void run() {
-                    //stopScan();
-                    customLoadingFullScreenPopup.dismiss();
-                    final ExtendedBluetoothDevice d = (ExtendedBluetoothDevice) adapter.getItem(position);
-                    listener.onDeviceSelected(d.device, d.name);
-                    customFullScreenPopup = new CustomFullScreenPopup(requireActivity());
-                    new XPopup.Builder(requireActivity()).asCustom(customFullScreenPopup).show();
-                }
-            });
+            long currentTime = Calendar.getInstance().getTimeInMillis();
+            if (currentTime - lastClickTime > MIN_CLICK_DELAY_TIME) {
+                lastClickTime = currentTime;
+                listview.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        //stopScan();
+                        customLoadingFullScreenPopup.dismiss();
+                        final ExtendedBluetoothDevice d = (ExtendedBluetoothDevice) adapter.getItem(position);
+                        listener.onDeviceSelected(d.device, d.name);
+                        customFullScreenPopup = new CustomFullScreenPopup(requireActivity());
+                        new XPopup.Builder(requireActivity()).asCustom(customFullScreenPopup).show();
+                    }
+                });
+            }
         });
         Window window = dialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0); //消除边距
@@ -272,7 +281,7 @@ public class ScannerFragment extends DialogFragment {
                 }
             }
         });
-        addBoundDevices();
+//        addBoundDevices();
         if (savedInstanceState == null) {
             LocalBroadcastManager.getInstance(requireActivity()).registerReceiver(commonBroadcastReceiver, makeIntentFilter());
             startScan();
@@ -346,6 +355,8 @@ public class ScannerFragment extends DialogFragment {
                 .setLegacy(false)
                 .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY).setReportDelay(1000).setUseHardwareBatchingIfSupported(false).build();
         final List<ScanFilter> filters = new ArrayList<>();
+
+
         filters.add(new ScanFilter.Builder().setServiceUuid(uuid).build());
         scanner.startScan(filters, settings, scanCallback);
 
@@ -398,73 +409,76 @@ public class ScannerFragment extends DialogFragment {
 
     private final BroadcastReceiver commonBroadcastReceiver = new BroadcastReceiver() {
 
-        private boolean flag = true;//加个标志，否则onReceive方法会重复接收通知
 
         @Override
         public void onReceive(final Context context, final Intent intent) {
-//            if (flag) {
-//                flag = false;
-            // Check if the broadcast applies the connected device
-            if (!isBroadcastForThisDevice(intent))
-                return;
 
-            final BluetoothDevice bluetoothDevice = intent.getParcelableExtra(BleProfileService.EXTRA_DEVICE);
-            if (bluetoothDevice == null)
-                return;
 
-            final String action = intent.getAction();
-            switch (action) {
-                case BleProfileService.BROADCAST_CONNECTION_STATE: {
-                    final int state = intent.getIntExtra(BleProfileService.EXTRA_CONNECTION_STATE, BleProfileService.STATE_DISCONNECTED);
+                if (!isBroadcastForThisDevice(intent))
+                    return;
 
-                    switch (state) {
-                        case BleProfileService.STATE_CONNECTED: {
-                            new Handler().postDelayed(new Runnable() {
-                                public void run() {
-                                    ToastUtils.showTextToas(EmergencyApplication.getContext(), "设备连接成功~");
-                                    Log.e(TAG, " --BleProFileService---onReceive:-------> " + "设备连接success");
-                                    final UARTInterface uart = (UARTInterface) requireActivity();
-                                    uart.send("<Battery?>");
-                                    uart.send("<ZeroPressCal?>");
+                final BluetoothDevice bluetoothDevice = intent.getParcelableExtra(BleProfileService.EXTRA_DEVICE);
+                if (bluetoothDevice == null)
+                    return;
+
+                final String action = intent.getAction();
+                switch (action) {
+
+                    case BleProfileService.BROADCAST_CONNECTION_STATE: {
+
+                        final int state = intent.getIntExtra(BleProfileService.EXTRA_CONNECTION_STATE, BleProfileService.STATE_DISCONNECTED);
+
+                        switch (state) {
+                            case BleProfileService.STATE_CONNECTED: {
+
+                                new Handler().postDelayed(new Runnable() {
+                                    public void run() {
+                                        ToastUtils.showTextToas(EmergencyApplication.getContext(), "设备连接成功~");
+                                        Log.e(TAG, " --BleProFileService---onReceive:-------> " + "设备连接success");
+                                        final UARTInterface uart = (UARTInterface) requireActivity();
+                                        uart.send("<Battery?>");
+                                        uart.send("<ZeroPressCal?>");
+                                        uart.send("<FWVer?>");
+                                        uart.send("<HWVer?>");
 //                                    uart.send("<FWVer?>");
 //                                    uart.send("<HWVer?>");
-                                    if (null != customFullScreenPopup) {
-                                        customFullScreenPopup.dismiss();
+                                        if (null != customFullScreenPopup) {
+                                            customFullScreenPopup.dismiss();
+                                        }
+                                        dialog.dismiss();
+                                        //requireActivity().unregisterReceiver(commonBroadcastReceiver);
                                     }
-                                    dialog.dismiss();
-                                    //requireActivity().unregisterReceiver(commonBroadcastReceiver);
-                                }
-                            }, 2000);
-                            break;
-                        }
-                        case BleProfileService.STATE_DISCONNECTED: {
-                            ToastUtils.showTextToas(EmergencyApplication.getContext(), "设备断开连接~");
-                            Log.e(TAG, " --BleProFileService---onReceive:-------> " + "设备断开连接");
-                            if (null != customFullScreenPopup) {
-                                customFullScreenPopup.dismiss();
+                                }, 2000);
+                                break;
                             }
-                            break;
-                        }
-                        case BleProfileService.STATE_LINK_LOSS: {
-                            Log.e(TAG, " --BleProFileService---onReceive:------STATE_LINK_LOSS-> ");
-                            break;
-                        }
-                        case BleProfileService.STATE_CONNECTING: {
+                            case BleProfileService.STATE_DISCONNECTED: {
+                                ToastUtils.showTextToas(EmergencyApplication.getContext(), "设备断开连接~");
+                                Log.e(TAG, " --BleProFileService---onReceive:-------> " + "设备断开连接");
+                                if (null != customFullScreenPopup) {
+                                    customFullScreenPopup.dismiss();
+                                }
+                                break;
+                            }
+                            case BleProfileService.STATE_LINK_LOSS: {
+                                Log.e(TAG, " --BleProFileService---onReceive:------STATE_LINK_LOSS-> ");
+                                break;
+                            }
+                            case BleProfileService.STATE_CONNECTING: {
 //                            ToastUtils.showTextToas(EmergencyApplication.getContext(), "设备正在连接中~");
-                            Log.e(TAG, " --BleProFileService---onReceive:-------> " + "设备正在连接");
-                            break;
-                        }
-                        case BleProfileService.STATE_DISCONNECTING: {
-                            Log.e(TAG, " --BleProFileService---onReceive:------STATE_DISCONNECTING-> ");
+                                Log.e(TAG, " --BleProFileService---onReceive:-------> " + "设备正在连接");
+                                break;
+                            }
+                            case BleProfileService.STATE_DISCONNECTING: {
+                                Log.e(TAG, " --BleProFileService---onReceive:------STATE_DISCONNECTING-> ");
 //                            customFullScreenPopup.dismiss();
-                            break;
+                                break;
+                            }
+                            default:
+                                // there should be no other actions
+                                break;
                         }
-                        default:
-                            // there should be no other actions
-                            break;
+                        break;
                     }
-                    break;
-                }
 //                case BleProfileService.BROADCAST_SERVICES_DISCOVERED: {
 //                    final boolean primaryService = intent.getBooleanExtra(BleProfileService.EXTRA_SERVICE_PRIMARY, false);
 //                    final boolean secondaryService = intent.getBooleanExtra(BleProfileService.EXTRA_SERVICE_SECONDARY, false);
@@ -498,9 +512,8 @@ public class ScannerFragment extends DialogFragment {
 //                    onError(bluetoothDevice, message, errorCode);
 //                    break;
 //                }
+                }
             }
-        }
-//        }
     };
 
     /**

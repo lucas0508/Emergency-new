@@ -1,9 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/build/classes" />
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/drawable/common_button_selector_org.xml" value="0.235" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/act_dev.xml" value="0.26811594202898553" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/act_ecg.xml" value="0.33" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/act_ecg24.xml" value="0.26811594202898553" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/act_ecg_24.xml" value="0.30364583333333334" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/act_ecg_list.xml" value="0.2734375" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/act_ecg_listN.xml" value="0.2677083333333333" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/act_ecg_record_fail_result.xml" value="0.33" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/act_v237_ecg_detail.xml" value="0.26811594202898553" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/activity_device.xml" value="0.18072916666666666" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/activity_mestudy.xml" value="0.16394927536231885" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/activity_stethoscope.xml" value="0.33" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/activity_teaching_detail.xml" value="0.26811594202898553" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/base_title_layout.xml" value="0.12590579710144928" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/ecgactivity_main.xml" value="0.22" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/fragment_feature_uart_control.xml" value="0.45031271716469773" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/fragment_feature_uart_control_score.xml" value="0.18795289855072464" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/fragment_home.xml" value="0.33" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/fragment_teaching.xml" value="0.18" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/include_new_analyze_result_success_x.xml" value="0.25" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/item_v237_ecg.xml" value="0.15374873353596757" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/layout_clm_b_sleep.xml" value="0.25" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/layout_doit_data.xml" value="0.12689969604863222" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/layout_ecg_b_fast_displayer.xml" value="0.33" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/layout_ecg_b_his.xml" value="0.5" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/layout_ecg_b_status_sub.xml" value="0.33" />
+        <entry key="..\:/xrf/project/Emergency/app/src/main/res/layout/layout_sys_stop.xml" value="0.30364583333333334" />
+      </map>
+    </option>
   </component>
-  <component name="ProjectType">
-    <option name="id" value="Android" />
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.5" />
+      </ProjectState>
+    </option>
   </component>
 </project>

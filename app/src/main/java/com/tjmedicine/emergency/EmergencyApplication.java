@@ -13,6 +13,10 @@ import android.widget.Toast;
 
 import androidx.multidex.MultiDexApplication;
 
+import com.helowin.sdk.cache.XCache;
+import com.kl.minttisdk.ble.BleManager;
+import com.kongzue.dialogx.DialogX;
+import com.kongzue.dialogx.style.IOSStyle;
 import com.mob.MobSDK;
 import com.mob.pushsdk.MobPush;
 import com.mob.pushsdk.MobPushCustomMessage;
@@ -26,8 +30,13 @@ import com.orhanobut.logger.PrettyFormatStrategy;
 import java.util.List;
 
 import no.nordicsemi.android.dfu.DfuServiceInitiator;
+import xyz.doikki.videoplayer.ijk.IjkPlayerFactory;
+import xyz.doikki.videoplayer.player.VideoViewConfig;
+import xyz.doikki.videoplayer.player.VideoViewManager;
 
 import static com.tjmedicine.emergency.common.global.Constants.LOGGER_TAG;
+
+import org.litepal.LitePal;
 
 /**
  * @author QiZai
@@ -51,6 +60,34 @@ public class EmergencyApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        LitePal.initialize(this);
+        XCache.INSTANCE.init(this);
+//        //播放器配置，注意：此为全局配置，按需开启
+//        VideoViewManager.setConfig(VideoViewConfig.newBuilder()
+//                .setLogEnabled(BuildConfig.DEBUG) //调试的时候请打开日志，方便排错
+//                /** 软解，支持格式较多，可通过自编译so扩展格式，结合 {@link xyz.doikki.dkplayer.widget.videoview.IjkVideoView} 使用更佳 */
+//                .setPlayerFactory(IjkPlayerFactory.create())
+////                .setPlayerFactory(AndroidMediaPlayerFactory.create()) //不推荐使用，兼容性较差
+//                /** 硬解，支持格式看手机，请使用CpuInfoActivity检查手机支持的格式，结合 {@link xyz.doikki.dkplayer.widget.videoview.ExoVideoView} 使用更佳 */
+////                .setPlayerFactory(ExoMediaPlayerFactory.create())
+//                // 设置自己的渲染view，内部默认TextureView实现
+////                .setRenderViewFactory(SurfaceRenderViewFactory.create())
+//                // 根据手机重力感应自动切换横竖屏，默认false
+////                .setEnableOrientation(true)
+//                // 监听系统中其他播放器是否获取音频焦点，实现不与其他播放器同时播放的效果，默认true
+////                .setEnableAudioFocus(false)
+//                // 视频画面缩放模式，默认按视频宽高比居中显示在VideoView中
+////                .setScreenScaleType(VideoView.SCREEN_SCALE_MATCH_PARENT)
+//                // 适配刘海屏，默认true
+////                .setAdaptCutout(false)
+//                // 移动网络下提示用户会产生流量费用，默认不提示，
+//                // 如果要提示则设置成false并在控制器中监听STATE_START_ABORT状态，实现相关界面，具体可以参考PrepareView的实现
+////                .setPlayOnMobileNetwork(false)
+//                // 进度管理器，继承ProgressManager，实现自己的管理逻辑
+////                .setProgressManager(new ProgressManagerImpl())
+//                .build());
+        //-----------------
+
         context = this;
         /*测试数据库*/
         //Stetho.initializeWithDefaults(this);
@@ -139,8 +176,58 @@ public class EmergencyApplication extends MultiDexApplication {
             });
         }
         MobPushReceiver();
-
+        initBle(this);
+        initDialogX();
 //        init();
+    }
+
+    private void initDialogX() {
+
+        //初始化
+        DialogX.init(this);
+
+        //开启调试模式，在部分情况下会使用 Log 输出日志信息
+        DialogX.DEBUGMODE = true;
+
+        DialogX.implIMPLMode= DialogX.IMPL_MODE.DIALOG_FRAGMENT;
+
+        //设置主题样式
+        DialogX.globalStyle = new IOSStyle();
+
+        //设置亮色/暗色（在启动下一个对话框时生效）
+        DialogX.globalTheme = DialogX.THEME.AUTO;
+
+//        //设置对话框最大宽度（单位为像素）
+//        DialogX.dialogMaxWidth = 1920;
+//
+//        //设置 InputDialog 自动弹出键盘
+//        DialogX.autoShowInputKeyboard = true;
+//
+        //限制 PopTip 一次只显示一个实例（关闭后可以同时弹出多个 PopTip）
+        DialogX.onlyOnePopTip = true;
+//
+//
+//        //设置默认对话框背景颜色（值为ColorInt，为-1不生效）
+//        DialogX.backgroundColor = Color.WHITE;
+//
+//        //设置默认对话框默认是否可以点击外围遮罩区域或返回键关闭，此开关不影响提示框（TipDialog）以及等待框（TipDialog）
+//        DialogX.cancelable = true;
+
+        //设置默认提示框及等待框（WaitDialog、TipDialog）默认是否可以关闭
+        DialogX.cancelableTipDialog = false;
+
+
+
+
+
+
+
+
+    }
+
+    //初始化听诊器SDK
+    private void initBle(EmergencyApplication emergencyApplication) {
+        BleManager.getInstance().init(emergencyApplication);
     }
 
     //初始化 蒲公英SDK

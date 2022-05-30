@@ -9,25 +9,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.constraintlayout.utils.widget.ImageFilterView;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.bumptech.glide.Glide;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
-import com.tjmedicine.emergency.EmergencyApplication;
 import com.tjmedicine.emergency.R;
 import com.tjmedicine.emergency.common.base.Adapter;
 import com.tjmedicine.emergency.common.base.BaseActivity;
 import com.tjmedicine.emergency.common.base.OnMultiClickListener;
 import com.tjmedicine.emergency.common.base.ViewHolder;
-import com.tjmedicine.emergency.common.bean.VolunteerBean;
-import com.tjmedicine.emergency.common.dialog.ConfirmAgreementDialog;
 import com.tjmedicine.emergency.ui.bean.ContactBean;
-import com.tjmedicine.emergency.ui.bean.EmergencyContactData;
-import com.tjmedicine.emergency.ui.bean.TeachData;
 import com.tjmedicine.emergency.ui.mine.contact.presenter.ContactPresenter;
 
 import java.util.ArrayList;

@@ -2,6 +2,7 @@ package com.tjmedicine.emergency.utils;
 
 
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.tjmedicine.emergency.R;
@@ -40,12 +41,11 @@ public class SimpleCountDownTimer extends CountDownTimer {
     }
 
     /**
-     * @param millisInFuture    倒计时总时间 单位：毫秒
-     *                          The number of millis in the future from the call
-     *                          to {@link #start()} until the countdown is done and {@link #onFinish()}
-     *                          is called.
-     *
-     * @param tvDisplay         显示时间的视图
+     * @param millisInFuture 倒计时总时间 单位：毫秒
+     *                       The number of millis in the future from the call
+     *                       to {@link #start()} until the countdown is done and {@link #onFinish()}
+     *                       is called.
+     * @param tvDisplay      显示时间的视图
      */
     public SimpleCountDownTimer(long millisInFuture, TextView tvDisplay) {
         super(millisInFuture, DEFAULT_INTERVAL);
@@ -68,9 +68,15 @@ public class SimpleCountDownTimer extends CountDownTimer {
         String strLMin = getTime(lMin);
         String strLSec = getTime(lSec);
         String strLMs = getMs(lMs);
+        if (strLSec.length() > 2 ) {
+            if (strLSec.startsWith("0")){
+                strLSec= strLSec.substring(1,3);
+            }
+        }
+        Log.e("倒计时", "onTick: -------->  " + strLSec);
         // 依次拼接时间 时:分:秒:毫秒
 //        tvDisplay.setText(strLHr + ":" + strLMin + ":" + strLSec + ":" + strLMs);
-        tvDisplay.setText( strLMin + ":" + strLSec + ":" + strLMs);
+        tvDisplay.setText(strLMin + ":" + strLSec + ":" + strLMs);
 
     }
 
@@ -116,5 +122,13 @@ public class SimpleCountDownTimer extends CountDownTimer {
             onFinishListener.onFinish();
     }
 
-
+    public static void main(String[] args) {
+        String strLSec="010";
+        if (strLSec.length() > 2 ) {
+            if (strLSec.startsWith("0")){
+                strLSec= strLSec.substring(1,3);
+            }
+        }
+        System.out.print("倒计时 onTick: -------->  " + strLSec);
+    }
 }

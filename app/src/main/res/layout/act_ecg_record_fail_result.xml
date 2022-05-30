@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eeeeee"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:background="@null"
+            android:padding="20dp"
+            android:scaleType="center"
+            android:src="@mipmap/icon_back"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:onClick="back"
+            android:paddingLeft="12dp"/>
+
+        <TextView
+            android:id="@+id/include_txt_title_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="心电详情"
+            android:layout_marginTop="20dp"
+            android:textColor="#333333"
+            android:textSize="18sp"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:background="@android:color/white"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="156dp">
+        <TextView
+            android:id="@+id/include_new_analyze_result_fail_status"
+            android:layout_margin="16dp"
+            android:textColor="#333333"
+            android:text="——"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:scaleType="fitXY"
+            android:id="@+id/include_new_analyze_result_fail_picture"
+            android:src="@color/divider"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_below="@+id/include_new_analyze_result_fail_status"
+            android:layout_above="@+id/include_new_analyze_result_fail_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textColor="#888888"
+            android:id="@+id/include_new_analyze_result_fail_time"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_alignParentBottom="true"
+            android:text="——"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/include_new_analyze_result_fail_length"
+            android:textColor="#888888"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentBottom="true"
+            android:text="时长:——s"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:paddingLeft="16dp"
+
+                android:layout_centerVertical="true"
+                android:id="@+id/include_impress_heart_fail"
+                android:text="心电分析印象"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/include_impress_heart_question_fail_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+
+
+                android:layout_marginTop="8dp"
+                android:layout_toEndOf="@+id/include_impress_heart_fail"
+                android:layout_toRightOf="@+id/include_impress_heart_fail"
+                android:src="@mipmap/icon_tip" />
+
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/include_new_analyze_result_fail_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/shape_measure_bg"
+            android:lineSpacingExtra="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>

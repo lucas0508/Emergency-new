@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@android:color/white"
+    android:visibility="gone"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:elevation="4dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:onClick="back"
+            android:paddingLeft="12dp"
+            android:src="@mipmap/icon_back"/>
+        <TextView
+            android:id="@+id/include_txt_title_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="心电数据处理"
+            android:layout_marginTop="20dp"
+            android:textColor="#333333"
+            android:textSize="18sp"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/showTag10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="58dp"
+        android:text="数据处理中，请不要关闭APP"
+        android:textSize="18sp"/>
+
+    <FrameLayout
+        android:id="@+id/clm10"
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="52dp">
+
+        <com.helowin.ecg.sdk.widget.AnimImageView
+            android:id="@+id/aiv10"
+            android:layout_width="105dp"
+            android:layout_height="105dp"/>
+
+        <TextView
+            android:id="@+id/text10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="0%"/>
+    </FrameLayout>
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="上传失败，请重试"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:background="#4ac995"
+        android:visibility="gone"
+        android:id="@+id/reTry"
+        />
+</LinearLayout>

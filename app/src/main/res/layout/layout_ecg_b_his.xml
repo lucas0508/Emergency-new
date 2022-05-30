@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@android:color/white"
+              android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/rl_base_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:elevation="4dp"
+        android:gravity="center_vertical">
+
+        <ImageButton
+            android:id="@+id/ib_close"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:padding="20dp"
+            android:onClick="back"
+            android:scaleType="center"
+            android:src="@mipmap/icon_back" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
+            android:text="接收数据"
+            android:textColor="#333333"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_common_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:paddingRight="16dp"
+            android:textColor="#333333" />
+
+
+    </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+    <FrameLayout
+        android:id="@+id/clm2"
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="35dp">
+
+        <com.helowin.ecg.sdk.widget.CountDownCircleView
+            android:id="@+id/aiv2"
+            android:layout_width="105dp"
+            android:layout_height="105dp"/>
+    </FrameLayout>
+    <TextView
+        android:id="@+id/time"
+        android:textColor="#333333"
+        android:textSize="16sp"
+        android:layout_marginTop="24dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:text="预计剩余时间 20:12"/>
+            <TextView
+                android:id="@+id/show"
+                android:layout_marginTop="8dp"
+                android:visibility="visible"
+                android:textSize="14sp"
+                android:text="正在从心电记录仪接收心电数据..."
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:layout_marginTop="70dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/fangqi"
+            android:layout_width="184dp"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="放弃传输"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+
+        </LinearLayout>
+
+</LinearLayout>

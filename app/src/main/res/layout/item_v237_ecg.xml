@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eeeeee"
+    android:padding="8dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white">
+        <TextView
+            android:id="@+id/ecg_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:text="静态心电报告解读服务"
+            />
+        <TextView
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:id="@+id/ecg_take_time"
+            android:layout_below="@+id/ecg_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text ="2016.1.10 11:20 "
+            />
+
+        <TextView
+            android:id="@+id/ecg_hr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:drawableLeft="@mipmap/icon_hr"
+            android:text="--BPM"
+            android:textColor="#333333"
+            android:textSize="16sp" />
+        <TextView
+            android:layout_alignParentRight="true"
+            android:id="@+id/ecg_lenth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ecg_hr"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:text="00:01:00"
+            />
+<com.helowin.sdk.widget.XImageView
+    android:id="@+id/ecg_logo"
+    android:layout_below="@+id/ecg_take_time"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:src="#000000"
+    android:contentDescription="625-146"/>
+
+    </RelativeLayout>
+
+
+
+</FrameLayout>

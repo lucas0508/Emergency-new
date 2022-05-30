@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -99,7 +100,16 @@ public class OptionDialog extends Dialog {
 
     private void showDialog() {
         mDialog.show();
-        // setDialogWindowAttr(mDialog);
+        //放在show()之后，不然有些属性是没有效果的，比如height和width
+        Window dialogWindow = mDialog.getWindow();
+        WindowManager m = getWindow().getWindowManager();
+        Display d = m.getDefaultDisplay(); // 获取屏幕宽、高
+        WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+        // 设置宽度
+        p.width = (int) (d.getWidth() * 0.95); // 宽度设置为屏幕的0.95
+        p.gravity = Gravity.CENTER;//设置位置
+        //p.alpha = 0.8f;//设置透明度
+        dialogWindow.setAttributes(p);
         mView.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.alpha_in));
         mDialogContent.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.scale_in));
     }

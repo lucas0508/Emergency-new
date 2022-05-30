@@ -14,6 +14,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -58,11 +59,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
 
     private String strFWVersion = null;
+    private String strHWVersion = null;
+
     private UARTService.UARTBinder bleService;
     private UARTInterface uartInterface;
     private UpdateFW updateFW;
     private MyReceiver myReceiver;
-
+    private UpdateFW.DataCallback  dataCallback ;
 
     @Override
     protected int setLayoutResourceID() {
@@ -71,7 +74,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void initView() {
-
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         //注册广播接收器
         myReceiver = new MyReceiver();
         IntentFilter intentFilter = new IntentFilter();
@@ -163,29 +166,74 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
             case R.id.ll_uart_update:
                 updateUART();
+
+
                 break;
         }
     }
 
+
+
     private void updateUART() {
-        dialog = new ProgressDialog(SettingActivity.this);
-        dialog.setTitle("下载提示");
-        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        dialog.setMessage("Update FW Start!");
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
 
         new Thread() {
             @Override
             public void run() {
                 Log.e(TAG, "Update FW Start!");
-                updateFW = new UpdateFW(SettingActivity.this, strFWVersion, uartInterface, progress -> runOnUiThread(new Runnable() {
+
+//                String strRsp = null;
+//
+//                strRsp = updateFW.sendChecksumCommand("NewVer=" + versionInVersionFile);
+//                if (strRsp == null)
+//                    return false;
+//                if (!strRsp.equals("<OK>"))
+//                    return false;
+
+
+//                updateFW = new UpdateFW(SettingActivity.this, strFWVersion,strHWVersion, uartInterface, progress -> runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        dialog.setProgress(progress);
+//                    }
+//                }));
+
+                dataCallback = new UpdateFW.DataCallback() {
                     @Override
-                    public void run() {
+                    public void setDataProgress(int progress) {
+
                         dialog.setProgress(progress);
                     }
-                }));
+                };
+
+                updateFW = new UpdateFW(SettingActivity.this, strFWVersion,strHWVersion, uartInterface,  dataCallback);
+
+                String s = updateFW.updateRes();
+                if (!TextUtils.isEmpty(s)){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUtils.showTextToas(SettingActivity.this, s);
+                        }
+                    });
+                    return;
+                }
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog = new ProgressDialog(SettingActivity.this);
+                        dialog.setTitle("下载提示");
+                        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                        dialog.setMessage("Update FW Start!");
+                        dialog.setCancelable(false);
+                        dialog.setCanceledOnTouchOutside(false);
+                        dialog.show();
+
+                    }
+                });
+
+
+
                 if (updateFW.isUpdateFW()) {
                     runOnUiThread(new Runnable() {
                         @Override
@@ -213,7 +261,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                         public void run() {
 //                            dialog.setMessage("FW Update Failed!");
                             ToastUtils.showTextToas(SettingActivity.this, "FW Update Failed!");
-                            //dialog.dismiss();
+                            dialog.dismiss();
                         }
                     });
                     Log.e(TAG, "FW Update Failed!");
@@ -221,6 +269,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             }
         }.start();
     }
+
+
+
 
     public void setData(int progress) {
         dialog.setProgress(progress);
@@ -275,6 +326,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     tv_FWVer.setText("软件版本号:" + split[1]);
                 } else if (s.startsWith("HWVer=")) {
                     String[] split = s.split("=");
+                    strHWVersion = split[1];
                     tv_HWVer.setText("硬件版本号:" + split[1]);
                 }
             }
@@ -315,6 +367,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             uartInterface = null;
         }
     };
+
 
 
 }

@@ -87,10 +87,8 @@ public class MultipleRecyclerAdapter2 extends RecyclerView.Adapter<MultipleRecyc
             holder.typeTv.setTextColor(mContext.getResources().getColor(R.color.beige));
         }
 
-        Log.e("aaaaa", " addddd--->" + new Gson().toJson(positionSet));
 
         holder.typeTv.setText(mListData.get(position).getValue());
-        Log.e("aaaaa", " adddddddddddddddd--->" + new Gson().toJson(mListData));
 
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
